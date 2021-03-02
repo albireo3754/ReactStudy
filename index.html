@@ -36,19 +36,24 @@
             parseInt(this.state.value) ===
             this.state.first * this.state.second
           ) {
-            this.setState({
-              result: `${this.state.first} * ${this.state.second} = ${this.state.value} 정답`,
-              first: Math.ceil(Math.random() * 9),
-              second: Math.ceil(Math.random() * 9),
-              value: "",
+            this.setState((prevState) => {
+              return {
+                result: `${prevState.first} * ${prevState.second} = ${prevState.value} 정답`,
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: "",
+              };
             });
           } else {
             this.setState({
               result: "땡",
               value: "",
             });
+            this.input.focus();
           }
         };
+
+        input;
 
         render() {
           return (
@@ -56,6 +61,9 @@
               <div>{`${this.state.first} 곱하기 ${this.state.second}는?`}</div>
               <form onSubmit={this.onSubmit}>
                 <input
+                  ref={(c) => {
+                    this.input = c;
+                  }}
                   type="number"
                   value={this.state.value}
                   onChange={(e) => this.setState({ value: e.target.value })}
