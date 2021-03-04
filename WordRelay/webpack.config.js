@@ -1,4 +1,7 @@
 const path = require("path");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const webpack = require("webpack");
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
   name: "wordrelay-setting",
@@ -10,19 +13,38 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist"),
     filename: "app.js",
+    publicPath: "/dist/",
   },
   module: {
     rules: [
       {
         test: /\.jsx?/,
-        exclude: /node_modules/,
         loader: "babel-loader",
         options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"],
-          plugins: ["@babel/plugin-proposal-class-properties"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: { browsers: ["> 1% in KR"] },
+              },
+            ],
+            "@babel/preset-react",
+          ],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "react-refresh/babel",
+          ],
         },
       },
     ],
   },
+  plugins: [
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
+  devServer: {
+    publicPath: "/dist/",
+    hot: true,
+  },
 };
-console.log(__dirname);
+console.log(isDevelopment);
