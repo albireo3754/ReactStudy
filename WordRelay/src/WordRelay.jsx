@@ -34,6 +34,7 @@ const WordRelay = () => {
         <button> 입력 </button>
       </form>
       {result}
+      {["hi", "bye"]}
     </>
   );
 };
