@@ -46,6 +46,11 @@ class ResponseCheck extends PureComponent {
     }
   };
 
+  onReset = () => {
+    this.setState({
+      result: [],
+    });
+  };
   renderAverage = () => {
     const { result } = this.state;
     console.log(result);
@@ -64,6 +69,7 @@ class ResponseCheck extends PureComponent {
           {this.state.message}
         </div>
         {this.renderAverage()}
+        <button onClick={this.onReset}>리셋</button>
       </>
     );
   }

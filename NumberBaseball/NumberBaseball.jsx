@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Try from "./Try.jsx";
 
 function getNumbers(n = 4) {
@@ -11,7 +11,7 @@ function getNumbers(n = 4) {
   return answer;
 }
 
-const NumberBaseball = () => {
+const 넘버볼 = () => {
   const [result, setResult] = useState("");
   const [value, setValue] = useState("");
   const [answer, setAnswer] = useState(getNumbers());
@@ -161,4 +161,4 @@ const NumberBaseball = () => {
 //   }
 // }
 
-export default NumberBaseball;
+export default memo(넘버볼);
