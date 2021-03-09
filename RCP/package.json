@@ -1,13 +1,21 @@
 {
-  "name": "rcp",
+  "name": "reactstudy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --env development"
+    "dev": "webpack serve --env development",
+    "build": "webpack"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starpro123/ReactStudy.git"
+  },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starpro123/ReactStudy/issues"
+  },
+  "homepage": "https://github.com/starpro123/ReactStudy#readme"
 }

@@ -1,8 +1,11 @@
-const Reload = require("@pmmmwh/react-refresh-webpack-plugin");
 const path = require("path");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const webpack = require("webpack");
+const isDevelopment = process.env.NODE_ENV !== "production";
+
 module.exports = {
-  name: "rcp-setting",
-  mode: "development",
+  name: "rsp-setting",
+  mode: "development", // 실 서비스 : production
   devtool: "eval",
   entry: {
     app: ["./src/client.jsx"],
@@ -35,9 +38,13 @@ module.exports = {
       },
     ],
   },
-  plugins: [new Reload()],
+  plugins: [
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
   devServer: {
     publicPath: "/dist/",
     hot: true,
   },
 };
+console.log(isDevelopment);
