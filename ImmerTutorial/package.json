@@ -1,0 +1,21 @@
+{
+  "name": "reactstudy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve --env development",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starpro123/ReactStudy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starpro123/ReactStudy/issues"
+  },
+  "homepage": "https://github.com/starpro123/ReactStudy#readme"
+}
