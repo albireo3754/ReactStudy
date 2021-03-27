@@ -82,3 +82,22 @@ dev server 설정을 위해 다음과 같이 실행해준다.
 
 > npm i -D webpack-dev-server 도 추가해준다.
 "dev": "webpack serve --env development" 로 npm에서 시작해주는게 중요함
+
+8. jsx에서 {[<component />, <component />, <component />]} 를 하면 일련의 컴포넌트를 사용가능함. ==> array function (map, reduce, foreach, every 등등 적극 이용)
+
+9. li에 key를 정해줄 땐 index같은걸로 하지말고 실제로 의미있는 값을 넣어야 삭제나 수정할 때 쉽게 할 수 있다.
+
+10. 여기서 의문점? jsx 태그에서는 파라미터는 어떻게 전달할까?
+-> props 이용 **<Try value={v} index={i} />** 를 써서 마치 html attribute 쓸 때처럼 쓴다.
+
++그리고 **const { title, age } = props** Destructuring을 사용하도록 함.
+
+11. props 를 전달하다 보면 더 이상 prop를 추적하는게 불가능한 수준에 온다. 그 때, redux, mobx, context Api등의 상태관리 도구를 이용함.
+
+# 숫자야구 게임
+
+1. 리액트는 state는 state가 바뀔 때 마다 render가 일어나기 때문에 불변성을 유지하는게 중요하다. 그래서 ... spread연산자를 적극 활용하자.
+
+2.  💥💥💥 주의 💥💥💥 render or hook에선 return 안에 setState를 넣어선 안됨
+
+3. 부모 node의 props를 받아 쓸 때 직접 변경하지 말고 사용하고 싶다면 state로 추가해서 사용하기
