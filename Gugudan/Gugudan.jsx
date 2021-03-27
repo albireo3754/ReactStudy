@@ -22,6 +22,7 @@ const Gugudan = () => {
       setResult("땡");
       setValue("");
     }
+    console.log(inputRef, inputRef.current);
     inputRef.current.focus();
   };
   return (
