@@ -101,3 +101,77 @@ dev server 설정을 위해 다음과 같이 실행해준다.
 2.  💥💥💥 주의 💥💥💥 render or hook에선 return 안에 setState를 넣어선 안됨
 
 3. 부모 node의 props를 받아 쓸 때 직접 변경하지 말고 사용하고 싶다면 state로 추가해서 사용하기
+
+# 반응속도 확인 게임
+> 목적
+- setTimeout을 리액트에 적용하기
+- jsx 에 조건문, 반복문을 넣기
+
+1. setTimeout을 쓸 때 주의 해야할 점
+```jsx
+if (state === "wating") {
+      this.setState({
+        state: "ready",
+        message: "초록색이 되면 화면을 클릭하세요",
+      });
+
+      this.timeout = setTimeout(() => {
+        this.setState({
+          state: "now",
+          message: "지금 클릭",
+        });
+      }, Math.floor(Math.random() * 1000) + 2000); // 2~3초 랜덤
+    } else if (state === "ready") {
+      clearTimeout(this.timeout);
+      // 성급하게 클릭
+      this.setState({
+        state: "wating",
+        message: "너무 성급하시군요! 초록색이 된 후에 클릭하세요.",
+      });
+```
+wating 상태일때 버튼을 클릭하면 render가 되는것은 별개로 timeout이 콜백상태로 들어가기 때문에 이것을 초기화 시켜줄 clearTimeout function을 추가 해야함.
+
+2. useRef 가 DOM을 조작할 때도 쓰지만, this.~~ 처럼 렌더링과 관련 없는 변수를 가리킬 때도 사용한다. 전역으로 const 객체를 설정해도 되는데, 일반적인 상수는 useRef를 사용하고 객체는 그냥 전역에 설정해도 될 것 같다.
+
+# 가위바위보 게임
+> 목적:
+리엑트의 생명주기 학습
+
+```jsx
+// constructor
+// render
+// ref
+componentDidMount() {} //생성후 + 비동기 요청
+// 이 주기가 반복
+while !end and shoudComponentUpdate(): // shoudComponentUpdate -> true -> 변화됨
+	render() {}
+	componentDidUpdate() {} //리렌더링
+componentWillUnmount() {} //삭제 되기 직전 + 비동기 요청 정리
+// 소멸
+
+---------------------------------
+
+Hooks
+useLayoutEffect() => {} // layout이 일어나기전
+
+// layout render //
+
+useEffect(() => {
+    /*componentDidMount, componentDidUpdate 역할 */
+    return () => {
+      /**componentWillUnmount 역할}**/
+    };
+  }, [//여기가 비었으면 componentDidMount, 아닐시
+      //componentDidMount + Update]);
+```
+1. 생명주기 -> 렌더함수가 동작할 때 일어나는 일련의 사이클
+
+2. componentDidMount() => 처음 render될 때 실행됨, rerender시 실행 X
+
+3. componentWillUnmount() => 컴포넌트가 제거되기 직전 (보통 시작할 때 할당 해둔 걸 삭제 해줌)
+
+4. componentDidUpdate() => 처음엔 시작 안하고 rerender시에 실행 O
+
+5. 위는 클래스 버전이고 훅은? useState하나에 다 통합되어있음 대신 render/ rerender 인지 조건을 잘 나눠야함
+
+6. useEffect는 레이아웃 변경 후에 작동한다. 변경 전에 사용하고 싶으면 useLayoutEffect 
