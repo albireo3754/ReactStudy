@@ -23,6 +23,7 @@
     "@babel/preset-env": "^7.13.8",
     "@babel/preset-react": "^7.12.13",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@types/styled-components": "^5.1.9",
     "babel-loader": "^8.2.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -42,6 +43,7 @@
     "immer": "^8.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-redux": "^7.2.2"
+    "react-redux": "^7.2.2",
+    "styled-components": "^5.2.1"
   }
 }
