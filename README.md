@@ -34,4 +34,144 @@ this.setState((prevState) => {count: prevState.count + 1})
 
 다음과 같이 사용하는게 마땅하다.
 
-4. document element의 focus기능을 사용하기 위해서
+4. document element의 focus기능을 사용하기 위해서 ref를 이용한다.
+```jsx
+ref={(c) => {this.input = c}}
+
+
+// 훅에선 다음과 같이 사용한다.
+
+const inputRef = useRef(null);
+inputRef.current.focus();
+// class에서도 된다 ref.current는
+// createRef(NULL); 가능
+// inputRef.current.focus();
+```
+
+5. 훅도 setState에 객체를 이용하면 여러개의 상태를 동시에 관리할 수 있는데, 대신 class와는 달리 기존의 state도 spread연산을 이용해서 복사 해줘야된다. 아니면 state가 사라짐
+```jsx
+setState({ ...state, name: e.target.value });
+```
+
+6. [github.com/browserslists](http://github.com/browserlists) ~를 이용하면 chrome의 최신버전까지 혹은 한국에서 점유율 몇퍼이상 그런식으로 지원할 수 있는 preset-env의 설정 값 마저 찾아 볼 수 있다. 그리고 preset-env의  옵션은
+
+```jsx
+options: {
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: { browsers: ["last 2 chrome versions"] },
+              },
+            ],
+            "@babel/preset-react",
+          ],
+          plugins: ["@babel/plugin-proposal-class-properties"],
+	       },
+```
+
+로 사용한다.
+
+7. webpack을 사용하다보니 개발시 저장하고 다시 실행할 때 빌드를 매번 해줘야한다는 번거로움이 있었는데 이것을 해결하기 위해서 hot reload를 도입한다. hot reload 자체는 
+
+[https://github.com/pmmmwh/react-refresh-webpack-plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) 이 라이브러리를 이용해서 쉽게 구현할 수 있다.
+
+> npm i react-refresh -D
+
+dev server 설정을 위해 다음과 같이 실행해준다.
+
+> npm i -D webpack-dev-server 도 추가해준다.
+"dev": "webpack serve --env development" 로 npm에서 시작해주는게 중요함
+
+8. jsx에서 {[<component />, <component />, <component />]} 를 하면 일련의 컴포넌트를 사용가능함. ==> array function (map, reduce, foreach, every 등등 적극 이용)
+
+9. li에 key를 정해줄 땐 index같은걸로 하지말고 실제로 의미있는 값을 넣어야 삭제나 수정할 때 쉽게 할 수 있다.
+
+10. 여기서 의문점? jsx 태그에서는 파라미터는 어떻게 전달할까?
+-> props 이용 **<Try value={v} index={i} />** 를 써서 마치 html attribute 쓸 때처럼 쓴다.
+
++그리고 **const { title, age } = props** Destructuring을 사용하도록 함.
+
+11. props 를 전달하다 보면 더 이상 prop를 추적하는게 불가능한 수준에 온다. 그 때, redux, mobx, context Api등의 상태관리 도구를 이용함.
+
+# 숫자야구 게임
+
+1. 리액트는 state는 state가 바뀔 때 마다 render가 일어나기 때문에 불변성을 유지하는게 중요하다. 그래서 ... spread연산자를 적극 활용하자.
+
+2.  💥💥💥 주의 💥💥💥 render or hook에선 return 안에 setState를 넣어선 안됨
+
+3. 부모 node의 props를 받아 쓸 때 직접 변경하지 말고 사용하고 싶다면 state로 추가해서 사용하기
+
+# 반응속도 확인 게임
+> 목적
+- setTimeout을 리액트에 적용하기
+- jsx 에 조건문, 반복문을 넣기
+
+1. setTimeout을 쓸 때 주의 해야할 점
+```jsx
+if (state === "wating") {
+      this.setState({
+        state: "ready",
+        message: "초록색이 되면 화면을 클릭하세요",
+      });
+
+      this.timeout = setTimeout(() => {
+        this.setState({
+          state: "now",
+          message: "지금 클릭",
+        });
+      }, Math.floor(Math.random() * 1000) + 2000); // 2~3초 랜덤
+    } else if (state === "ready") {
+      clearTimeout(this.timeout);
+      // 성급하게 클릭
+      this.setState({
+        state: "wating",
+        message: "너무 성급하시군요! 초록색이 된 후에 클릭하세요.",
+      });
+```
+wating 상태일때 버튼을 클릭하면 render가 되는것은 별개로 timeout이 콜백상태로 들어가기 때문에 이것을 초기화 시켜줄 clearTimeout function을 추가 해야함.
+
+2. useRef 가 DOM을 조작할 때도 쓰지만, this.~~ 처럼 렌더링과 관련 없는 변수를 가리킬 때도 사용한다. 전역으로 const 객체를 설정해도 되는데, 일반적인 상수는 useRef를 사용하고 객체는 그냥 전역에 설정해도 될 것 같다.
+
+# 가위바위보 게임
+> 목적:
+리엑트의 생명주기 학습
+
+```jsx
+// constructor
+// render
+// ref
+componentDidMount() {} //생성후 + 비동기 요청
+// 이 주기가 반복
+while !end and shoudComponentUpdate(): // shoudComponentUpdate -> true -> 변화됨
+	render() {}
+	componentDidUpdate() {} //리렌더링
+componentWillUnmount() {} //삭제 되기 직전 + 비동기 요청 정리
+// 소멸
+
+---------------------------------
+
+Hooks
+useLayoutEffect() => {} // layout이 일어나기전
+
+// layout render //
+
+useEffect(() => {
+    /*componentDidMount, componentDidUpdate 역할 */
+    return () => {
+      /**componentWillUnmount 역할}**/
+    };
+  }, [//여기가 비었으면 componentDidMount, 아닐시
+      //componentDidMount + Update]);
+```
+1. 생명주기 -> 렌더함수가 동작할 때 일어나는 일련의 사이클
+
+2. componentDidMount() => 처음 render될 때 실행됨, rerender시 실행 X
+
+3. componentWillUnmount() => 컴포넌트가 제거되기 직전 (보통 시작할 때 할당 해둔 걸 삭제 해줌)
+
+4. componentDidUpdate() => 처음엔 시작 안하고 rerender시에 실행 O
+
+5. 위는 클래스 버전이고 훅은? useState하나에 다 통합되어있음 대신 render/ rerender 인지 조건을 잘 나눠야함
+
+6. useEffect는 레이아웃 변경 후에 작동한다. 변경 전에 사용하고 싶으면 useLayoutEffect 
