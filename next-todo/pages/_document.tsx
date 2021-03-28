@@ -27,17 +27,21 @@ export default class MyDocument extends Document {
     }
   }
 
-  // render() {
-  //   return (
-  //     <Html>
-  //       <head>
-  //         <style />
-  //       </head>
-  //       <body>
-  //         <Main />
-  //         <NextScript />
-  //       </body>
-  //     </Html>
-  //   );
-  // }
+  render() {
+    return (
+      <Html lang='ko'>
+        <head>
+          <link rel='preconnect' href='https://fonts.gstatic.com' />
+          <link
+            href='https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap'
+            rel='stylesheet'
+          />
+        </head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
