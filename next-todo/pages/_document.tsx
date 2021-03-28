@@ -1,15 +1,16 @@
-import Document, { Html, Main, NextScript } from 'next/document';
+import { NextPageContext } from 'next';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: any) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
+          enhanceApp: (App: any) => (props: any) => sheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -30,13 +31,13 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang='ko'>
-        <head>
+        <Head>
           <link rel='preconnect' href='https://fonts.gstatic.com' />
           <link
-            href='https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap'
+            href='https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gaegu:wght@300;400;700&display=swap'
             rel='stylesheet'
           />
-        </head>
+        </Head>
         <body>
           <Main />
           <NextScript />

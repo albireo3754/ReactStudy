@@ -1,6 +1,6 @@
 import React from "react";
 import css from "styled-jsx/css";
-import { GoMail } from "react-icons/go";
+import { GoOrganization, GoLink, GoLocation, GoMail } from "react-icons/go";
 const style = css`
   .profile-box {
     width: 25%;

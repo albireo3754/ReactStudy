@@ -1,5 +1,5 @@
 import Link from "next/link";
-const Header = () => {
+const Header2 = () => {
   return (
     <h1 className="hi">
       Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -8,4 +8,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header2;
