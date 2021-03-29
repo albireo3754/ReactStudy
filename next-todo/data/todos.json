@@ -1,4 +1,1 @@
-[
-  { "id": 1, "text": "마트가기", "color": "red", "checked": false },
-  { "id": 2, "text": "숙제하기", "color": "orange", "checked": true }
-]
+[{"id":1,"text":"마트가기","color":"red","checked":false},{"id":2,"text":"숙제하기","color":"orange","checked":false}]

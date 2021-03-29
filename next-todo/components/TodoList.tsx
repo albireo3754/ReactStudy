@@ -4,6 +4,7 @@ import { TodoType } from '../types/todo';
 import palette from '../styles/palette';
 import TrashCanIcon from '../public/statics/svg/trash_can.svg';
 import CheckMarkIcon from '../public/statics/svg/check_mark.svg';
+import { checkTodoApi } from '../lib/api/todo';
 
 const Container = styled.div`
   font-family: 'Gaegu', cursive;
@@ -117,7 +118,14 @@ const Container = styled.div`
     }
   }
 `;
-
+const checkTodo = async (id: number) => {
+  try {
+    await checkTodoApi(id);
+    console.log('체크하였습니다.');
+  } catch (e) {
+    console.log(e);
+  }
+};
 interface IProps {
   todos: TodoType[];
 }
@@ -197,7 +205,13 @@ const TodoList: FC<IProps> = ({ todos }) => {
               {todo.checked ? (
                 <>
                   <TrashCanIcon className='todo-trash-can' onClick={() => {}} />
-                  <CheckMarkIcon className='todo-check-mark' onClick={() => {}} />
+                  <CheckMarkIcon
+                    className='todo-check-mark'
+                    onClick={() => {
+                      console.log('hi');
+                      checkTodo(todo.id);
+                    }}
+                  />
                 </>
               ) : (
                 <button type='button' className='todo-button' onClick={() => {}} />
