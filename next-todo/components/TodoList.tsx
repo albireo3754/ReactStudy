@@ -4,7 +4,7 @@ import { TodoType } from '../types/todo';
 import palette from '../styles/palette';
 import TrashCanIcon from '../public/statics/svg/trash_can.svg';
 import CheckMarkIcon from '../public/statics/svg/check_mark.svg';
-import { checkTodoApi } from '../lib/api/todo';
+import { checkTodoApi, deleteTodoApi } from '../lib/api/todo';
 
 const Container = styled.div`
   font-family: 'Gaegu', cursive;
@@ -87,12 +87,12 @@ const Container = styled.div`
         }
         .todo-trash-can {
           path {
-            fill: ${palette.deep_green};
+            fill: ${palette.deep_red};
           }
         }
         .todo-check-mark {
           path {
-            fill: ${palette.deep_red};
+            fill: ${palette.deep_green};
           }
         }
 
@@ -180,6 +180,20 @@ const TodoList: FC<IProps> = ({ todos }) => {
       console.log(e);
     }
   };
+  const deleteTodo = async (id: number) => {
+    try {
+      await deleteTodoApi(id);
+      const newTodos = localTodos
+        .filter((todo) => todo.id !== id)
+        .map((todo, i) => {
+          return { ...todo, id: i };
+        });
+      setLocalTodos(newTodos);
+      console.log('삭제가 완료됬습니다.');
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const todoColorNums = useMemo(() => getTodoColorNums(todos), [todos]);
   let promise = new Promise(function (resolve, reject) {
     setTimeout(() => resolve('hi'), 5000);
@@ -213,7 +227,12 @@ const TodoList: FC<IProps> = ({ todos }) => {
             <div className='todo-right-side'>
               {todo.checked ? (
                 <>
-                  <TrashCanIcon className='todo-trash-can' onClick={() => {}} />
+                  <TrashCanIcon
+                    className='todo-trash-can'
+                    onClick={() => {
+                      deleteTodo(todo.id);
+                    }}
+                  />
                   <CheckMarkIcon className='todo-check-mark' onClick={() => checkTodo(todo.id)} />
                 </>
               ) : (
