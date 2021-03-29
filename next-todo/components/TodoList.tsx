@@ -164,10 +164,9 @@ const TodoList: FC<IProps> = ({ todos }) => {
   console.log(todos);
 
   const todoColorNums = useMemo(() => getTodoColorNums(todos), [todos]);
-  console.log(Object.keys(todoColorNums));
-  console.log(todoColorNums);
-  console.log(todoColorNums['red']);
-
+  let promise = new Promise(function (resolve, reject) {
+    setTimeout(() => resolve('hi'), 5000);
+  });
   return (
     <Container>
       <div className='todo-list-header'>
