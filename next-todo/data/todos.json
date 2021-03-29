@@ -1,1 +1,1 @@
-[{"id":1,"text":"마트가기","color":"red","checked":false},{"id":2,"text":"숙제하기","color":"orange","checked":false}]
+[{"id":1,"text":"마트가기","color":"red","checked":true},{"id":2,"text":"숙제하기","color":"orange","checked":true},{"id":3,"text":"공부하기","color":"red","checked":true},{"id":4,"text":"공부하기","color":"red","checked":true},{"id":5,"text":"롤하기","color":"yellow","checked":true}]

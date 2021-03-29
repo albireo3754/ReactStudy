@@ -1,11 +1,13 @@
+import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { addTodoApi } from '../lib/api/todo';
 import BrushIcon from '../public/statics/svg/brush.svg';
 import palette from '../styles/palette';
 import { TodoType } from '../types/todo';
 
 const Container = styled.div`
-  padding: 50px;
+  padding: 12px;
   .add-todo-header-title {
     font-size: 21px;
   }
@@ -43,6 +45,10 @@ const Container = styled.div`
           margin: 0;
         }
       }
+
+      .add-todo-selected-color {
+        border: 2px solid black;
+      }
     }
     .bg-blue {
       background-color: ${palette.blue};
@@ -76,26 +82,45 @@ const Container = styled.div`
     font-size: 16px;
   }
 `;
-
+const colors: TodoType['color'][] = ['red', 'orange', 'yellow', 'green', 'blue', 'navy'];
 const AddTodo = () => {
   const [text, setText] = useState('');
+  const [selectedColor, setSelectedColor] = useState<TodoType['color']>(colors[0]);
+  const router = useRouter();
 
+  const addTodo = async () => {
+    try {
+      if (!text || !selectedColor) {
+        alert('색상과 할 일을 입력해주세요.');
+        return;
+      }
+      await addTodoApi({ text, color: selectedColor });
+      console.log('추가했습니다.');
+      router.push('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Container>
       <div className='add-todo-header'>
         <h1 className='add-todo-header-title'>Add Todo</h1>
-        <button type='button' className='add-todo-submit-button' onClick={() => {}}>
+        <button type='button' className='add-todo-submit-button' onClick={addTodo}>
           추가하기
         </button>
       </div>
       <div className='add-todo-colors-wrapper'>
         <div className='add-todo-color-list'>
-          {['red', 'orange', 'yellow', 'green', 'blue', 'navy'].map((color, index) => (
+          {colors.map((color, index) => (
             <button
               key={index}
               type='button'
-              className={`bg-${color} add-todo-color-button`}
-              onClick={() => {}}
+              className={`bg-${color} add-todo-color-button ${
+                color === selectedColor ? 'add-todo-selected-color' : ''
+              }`}
+              onClick={() => {
+                setSelectedColor(color as TodoType['color']);
+              }}
             />
           ))}
         </div>
