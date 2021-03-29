@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { TodoType } from '../../types/todo';
 import fs from 'fs';
-import axios from 'axios';
+import axios from '.';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {

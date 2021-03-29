@@ -5,28 +5,26 @@ import TodoList from '../components/TodoList';
 import { TodoType } from '../types/todo';
 import { getTodosAPI } from './api/todos';
 
+interface IProps {
+  todos: TodoType[];
+}
+
 const Container = styled.div`
   font-style: italic;
 `;
 
-const todos: TodoType[] = [
-  { id: 1, text: '마트가기', color: 'red', checked: false },
-  { id: 2, text: '숙제하기', color: 'orange', checked: true },
-];
-
-const index: NextPage = () => {
+const index: NextPage<IProps> = ({ todos }) => {
+  // console.log(process.env, '클라');
   return <TodoList todos={todos} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  console.log(process.env);
   try {
-    const res = await getTodosAPI();
-    console.log(res, 'hi');
-    console.log('hi??');
-    return { props: {} };
+    const { data } = await getTodosAPI();
+    return { props: { todos: data } };
   } catch (e) {
-    console.log(e);
-    return { props: {} };
+    return { props: { todos: [] } };
   }
 };
 export default index;
