@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { TodoType } from '../../types/todo';
 import fs from 'fs';
+import axios from 'axios';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
@@ -31,3 +32,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.end();
   }
 };
+
+export const getTodosAPI = () => axios.get<TodoType[]>('api/todos');

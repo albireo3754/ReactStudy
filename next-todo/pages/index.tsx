@@ -1,7 +1,9 @@
-import { NextPage } from 'next';
+import axios from 'axios';
+import { GetServerSideProps, NextPage } from 'next';
 import styled from 'styled-components';
 import TodoList from '../components/TodoList';
 import { TodoType } from '../types/todo';
+import { getTodosAPI } from './api/todos';
 
 const Container = styled.div`
   font-style: italic;
@@ -16,4 +18,15 @@ const index: NextPage = () => {
   return <TodoList todos={todos} />;
 };
 
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await getTodosAPI();
+    console.log(res, 'hi');
+    console.log('hi??');
+    return { props: {} };
+  } catch (e) {
+    console.log(e);
+    return { props: {} };
+  }
+};
 export default index;
