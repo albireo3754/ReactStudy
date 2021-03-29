@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { TodoType } from '../types/todo';
 import palette from '../styles/palette';
 import TrashCanIcon from '../public/statics/svg/trash_can.svg';
