@@ -45,3 +45,6 @@ const initStore = () => {
 };
 
 export const wrapper = createWrapper(initStore);
+declare module 'react-redux' {
+  interface DefaultRootState extends RootState {}
+}
