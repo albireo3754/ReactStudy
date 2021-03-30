@@ -194,7 +194,7 @@ const TodoList: FC<IProps> = ({ todos }) => {
       console.log(e);
     }
   };
-  const todoColorNums = useMemo(() => getTodoColorNums(todos), [todos]);
+  const todoColorNums = useMemo(() => getTodoColorNums(localTodos), [localTodos]);
   let promise = new Promise(function (resolve, reject) {
     setTimeout(() => resolve('hi'), 5000);
   });
@@ -202,7 +202,7 @@ const TodoList: FC<IProps> = ({ todos }) => {
     <Container>
       <div className='todo-list-header'>
         <p className='todo-list-last-todo'>
-          남은 TODO <span>{todos.length}개</span>
+          남은 TODO <span>{localTodos.length}개</span>
         </p>
         <div className='todo-list-header-colors'>
           {Object.keys(todoColorNums).map((color, i) => {

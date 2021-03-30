@@ -8,6 +8,7 @@ import { TodoType } from '../types/todo';
 
 const Container = styled.div`
   padding: 12px;
+  height: 30%;
   .add-todo-header-title {
     font-size: 21px;
   }
