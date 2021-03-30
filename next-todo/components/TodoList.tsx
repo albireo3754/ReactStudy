@@ -5,6 +5,9 @@ import palette from '../styles/palette';
 import TrashCanIcon from '../public/statics/svg/trash_can.svg';
 import CheckMarkIcon from '../public/statics/svg/check_mark.svg';
 import { checkTodoApi, deleteTodoApi } from '../lib/api/todo';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { todoActions } from '../store/todo';
 
 const Container = styled.div`
   font-family: 'Gaegu', cursive;
@@ -161,8 +164,10 @@ const getTodoColorNums = (todos: TodoType[]): ColorNumsType => {
   return { red, orange, yellow, green, blue, navy };
 };
 
-const TodoList: FC<IProps> = ({ todos }) => {
-  const [localTodos, setLocalTodos] = useState(todos);
+const TodoList: FC<IProps> = () => {
+  // const [localTodos, setLocalTodos] = useState(todos);
+  const localTodos = useSelector((state: RootState) => state.todo.todos);
+  const dispatch = useDispatch();
 
   const checkTodo = async (id: number) => {
     try {
@@ -174,7 +179,7 @@ const TodoList: FC<IProps> = ({ todos }) => {
         }
         return todo;
       });
-      setLocalTodos(newTodos);
+      dispatch(todoActions.setTodo(newTodos));
       console.log(localTodos);
     } catch (e) {
       console.log(e);
@@ -188,7 +193,7 @@ const TodoList: FC<IProps> = ({ todos }) => {
         .map((todo, i) => {
           return { ...todo, id: i };
         });
-      setLocalTodos(newTodos);
+      dispatch(todoActions.setTodo(newTodos));
       console.log('삭제가 완료됬습니다.');
     } catch (e) {
       console.log(e);

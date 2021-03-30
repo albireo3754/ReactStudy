@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { GetServerSideProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import styled from 'styled-components';
 import TodoList from '../components/TodoList';
 import { TodoType } from '../types/todo';
@@ -14,9 +13,9 @@ const Container = styled.div`
   font-style: italic;
 `;
 
-const index: NextPage<IProps> = ({ todos }) => {
+const index: NextPage = () => {
   // console.log(process.env, '클라');
-  return <TodoList todos={todos} />;
+  return <TodoList />;
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async ({ store }) => {
@@ -24,9 +23,9 @@ export const getServerSideProps = wrapper.getServerSideProps(async ({ store }) =
   try {
     const { data } = await getTodosAPI();
     store.dispatch(todoActions.setTodo(data));
-    return { props: { todos: data } };
+    // return { props: {} };
   } catch (e) {
-    return { props: { todos: [] } };
+    // return { props: {} };
   }
 });
 export default index;
