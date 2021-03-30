@@ -1,10 +1,9 @@
 import { TodoType } from '../types/todo';
 
-export const INIT_TODO_LIST = 'todo/INIT_TODO_LIST';
 export const SET_TODO_LIST = 'todo/SET_TODO_LIST';
 export const setTodo = (payload: TodoType[]) => {
   return {
-    type: INIT_TODO_LIST,
+    type: SET_TODO_LIST,
     payload,
   };
 };
