@@ -4,6 +4,8 @@ import AirbnbLogoTextIcon from '../public/statics/svg/logo/logo_text.svg';
 import Link from 'next/link';
 import palette from '../styles/palette';
 import { useState } from 'react';
+import ModalPortal from './ModalPortal';
+import SignUpModal from './auth/SignUpModal';
 const Container = styled.div`
   position: sticky;
   top: 0;
@@ -47,29 +49,6 @@ const Container = styled.div`
       box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
     }
   }
-  .modal-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    .modal-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.75);
-      z-index: 10;
-    }
-    .modal-contents {
-      width: 400px;
-      height: 400px;
-      background-color: white;
-      z-index: 11;
-    }
-  }
 `;
 
 const Header = () => {
@@ -92,10 +71,9 @@ const Header = () => {
         </button>
       </div>
       {modalOpened && (
-        <div className='modal-wrapper'>
-          <div className='modal-background' role='presentation' onClick={() => setModalOpened(false)} />
-          <div className='modal-contents'></div>
-        </div>
+        <ModalPortal closePortal={() => setModalOpened(false)}>
+          <SignUpModal />
+        </ModalPortal>
       )}
     </Container>
   );
