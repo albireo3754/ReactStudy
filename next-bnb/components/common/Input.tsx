@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
+import useValidateMode from '../../hooks/useValidateMode';
 import palette from '../../styles/palette';
 
 type InputContainerProps = {
@@ -75,20 +76,10 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
 }
 
-const Input: FC<IProps> = ({
-  icon,
-  validateMode,
-  isValid = false,
-  useValidation = true,
-  errorMessage,
-  ...props
-}) => {
+const Input: FC<IProps> = ({ icon, isValid = false, useValidation = true, errorMessage, ...props }) => {
+  const validateMode = useSelector((state) => state.common.validateMode);
   return (
-    <Container
-      iconExist={!!icon}
-      isValid={isValid}
-      useValidation={(validateMode as boolean) && useValidation}
-    >
+    <Container iconExist={!!icon} isValid={isValid} useValidation={validateMode && useValidation}>
       <input {...props} />
       <div className='input-icon-wrapper'>{icon}</div>
       {useValidation && validateMode && !isValid && errorMessage && (

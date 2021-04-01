@@ -13,6 +13,7 @@ import Button from '../common/Button';
 import { signupAPI } from '../../lib/api/auth';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../store/user';
+import useValidateMode from '../../hooks/useValidateMode';
 
 const Container = styled.form`
   width: 568px;
@@ -73,7 +74,7 @@ const SignUpModal = () => {
   const [birthDay, setBirthDay] = useState<string | undefined>();
   const [birthMonth, setBirthMonth] = useState<string | undefined>();
   const [hidePassword, setHidePassword] = useState(true);
-  const [validateMode, setValidateMode] = useState(false);
+  const { setValidateMode } = useValidateMode();
   const dispatch = useDispatch();
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -104,7 +105,6 @@ const SignUpModal = () => {
   const onSubmitSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValidateMode(true);
-
     if (!email || !lastname || !!firstname || !password) {
       return undefined;
     }
@@ -132,7 +132,6 @@ const SignUpModal = () => {
         type='email'
         name='email'
         icon={<MailIcon />}
-        validateMode={validateMode}
         useValidation
         isValid={!!email}
         errorMessage='이메일이 필요합니다.'
@@ -141,7 +140,6 @@ const SignUpModal = () => {
         onChange={onChangeFirstname}
         placeholder='성(예: 홍)'
         icon={<PersonXIcon />}
-        validateMode={validateMode}
         useValidation
         isValid={!!firstname}
         errorMessage='성이 필요합니다.'
@@ -150,7 +148,6 @@ const SignUpModal = () => {
         onChange={onChangeLastname}
         placeholder='이름(예: 길동)'
         icon={<PersonXIcon />}
-        validateMode={validateMode}
         useValidation
         isValid={!!lastname}
         errorMessage='이름이 필요합니다.'
@@ -167,7 +164,6 @@ const SignUpModal = () => {
               <OpenedEyeIcon onClick={toggleHidePassword} />
             )
           }
-          validateMode={validateMode}
           useValidation
           isValid={!!password}
           errorMessage='이메일이 필요합니다.'
