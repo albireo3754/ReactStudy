@@ -5,7 +5,6 @@ import { StoredUserType } from '../../../types/user';
 import jwt from 'jsonwebtoken';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('req!');
   if (req.method === 'POST') {
     console.log('hi');
     const { email, firstname, lastname, password, birthday } = req.body;
@@ -17,8 +16,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const userExist = Data.user.exist({ email });
     if (userExist) {
       res.statusCode = 409;
-      res.send('이미 가입된 이메일입니다.');
+      return res.send('이미 가입된 이메일입니다.');
     }
+
     const hashedPassword = bcrypt.hashSync(password, 8);
     const users = Data.user.getList();
     let userId;
@@ -43,9 +43,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       `access_token=${token}; path=/; expires=${new Date(Date.now() + 60 * 60 * 24 * 1000 * 3)}; httponly`,
     );
     Data.user.write([...users, newUser]);
-    return res.end();
+    const newUserWithoutPassword: Partial<Pick<StoredUserType, 'password'>> = newUser;
+    delete newUserWithoutPassword.password;
+    res.statusCode = 200;
+    return res.send(newUser);
   }
   res.statusCode = 405;
 
   return res.end();
 };
+
+interface Address {
+  email: string;
+  address: string;
+}

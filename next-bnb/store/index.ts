@@ -1,7 +1,12 @@
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import { createWrapper, HYDRATE, MakeStore } from 'next-redux-wrapper';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import user from './user';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  user: user.reducer,
+});
+export type RootState = ReturnType<typeof rootReducer>;
+let initialRootState: RootState;
 
 const reducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
@@ -9,19 +14,19 @@ const reducer = (state: any, action: any) => {
       ...state,
       ...action.payload,
     };
-    if (state.count) nextState.count = state.count;
     return nextState;
   }
   return rootReducer(state, action);
 };
 
-export type RootState = ReturnType<typeof rootReducer>;
-
-const initStore = () => {
-  return configureStore({
+const initStore: MakeStore = () => {
+  const store = configureStore({
     reducer,
     devTools: true,
   });
+  initialRootState = store.getState();
+  console.log(initialRootState);
+  return store;
 };
 
 export const wrapper = createWrapper(initStore);
