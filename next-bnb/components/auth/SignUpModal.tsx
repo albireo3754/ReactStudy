@@ -5,13 +5,14 @@ import PersonXIcon from '../../public/statics/svg/auth/person.svg';
 import OpenedEyeIcon from '../../public/statics/svg/auth/opend_eye.svg';
 import CloseEyeIcon from '../../public/statics/svg/auth/closed_eye.svg';
 import palette from '../../styles/palette';
-import Input from '../common/input';
+import Input from '../common/Input';
 import React, { useState } from 'react';
 import Selector from '../common/Selector';
 import { dayList, monthList, yearList } from '../../lib/staticData';
 import Button from '../common/Button';
+import { signupAPI } from '../../pages/api/auth';
 
-const Container = styled.div`
+const Container = styled.form`
   width: 568px;
   height: 614px;
   padding: 32px;
@@ -62,11 +63,26 @@ const Container = styled.div`
 `;
 
 const SignUpModal = () => {
+  const [email, setEmail] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [password, setPassword] = useState('');
   const [birthYear, setBirthYear] = useState<string | undefined>();
   const [birthDay, setBirthDay] = useState<string | undefined>();
   const [birthMonth, setBirthMonth] = useState<string | undefined>();
   const [hidePassword, setHidePassword] = useState(true);
-
+  const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+  const onChangeLastname = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastname(event.target.value);
+  };
+  const onChangeFirstname = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstname(event.target.value);
+  };
+  const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
   const onChangeBirthMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setBirthMonth(event.target.value);
   };
@@ -81,16 +97,40 @@ const SignUpModal = () => {
     setHidePassword(!hidePassword);
   };
 
+  const onSubmitSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const signUpBody = {
+        email,
+        lastname,
+        firstname,
+        password,
+        birthday: new Date(`${birthYear}-${birthMonth!.replace('월', '')}-${birthDay}`).toISOString(),
+      };
+      await signupAPI(signUpBody);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <Container>
+    <Container onSubmit={onSubmitSignUp}>
       <CloseXIcon className='modal-close-x-icon' />
-      <Input placeholder='이메일 주소' type='email' name='email' icon={<MailIcon />} />
-      <Input placeholder='성(예: 홍)' icon={<PersonXIcon />} />
-      <Input placeholder='이름(예: 길동)' icon={<PersonXIcon />} />
+      <Input
+        onChange={onChangeEmail}
+        placeholder='이메일 주소'
+        type='email'
+        name='email'
+        icon={<MailIcon />}
+      />
+      <Input onChange={onChangeFirstname} placeholder='성(예: 홍)' icon={<PersonXIcon />} />
+      <Input onChange={onChangeLastname} placeholder='이름(예: 길동)' icon={<PersonXIcon />} />
       <div className='sign-up-password-input-wrapper'>
         <Input
           placeholder='비밀번호 설정하기'
           type={hidePassword ? 'password' : 'text'}
+          onChange={onChangePassword}
           icon={
             hidePassword ? (
               <CloseEyeIcon onClick={toggleHidePassword} />
