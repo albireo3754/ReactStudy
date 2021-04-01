@@ -2,9 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Data from '../../../lib/data';
 import bcrypt from 'bcryptjs';
 import { StoredUserType } from '../../../types/user';
+import jwt from 'jsonwebtoken';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('req!');
   if (req.method === 'POST') {
+    console.log('hi');
     const { email, firstname, lastname, password, birthday } = req.body;
     if (!email || !firstname || !lastname || !password || !birthday) {
       res.statusCode = 400;
@@ -34,6 +37,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       profileImage: '/static/image/user/default_user_profile_image.jpg',
     };
 
+    const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
+    res.setHeader(
+      'Set-Cookie',
+      `access_token=${token}; path=/; expires=${new Date(Date.now() + 60 * 60 * 24 * 1000 * 3)}; httponly`,
+    );
     Data.user.write([...users, newUser]);
     return res.end();
   }
