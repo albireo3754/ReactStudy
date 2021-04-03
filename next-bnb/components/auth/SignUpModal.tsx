@@ -6,7 +6,7 @@ import OpenedEyeIcon from '../../public/statics/svg/auth/opend_eye.svg';
 import CloseEyeIcon from '../../public/statics/svg/auth/closed_eye.svg';
 import palette from '../../styles/palette';
 import Input from '../common/Input';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Selector from '../common/Selector';
 import { dayList, monthList, yearList } from '../../lib/staticData';
 import Button from '../common/Button';
@@ -14,6 +14,7 @@ import { signupAPI } from '../../lib/api/auth';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../store/user';
 import useValidateMode from '../../hooks/useValidateMode';
+import PasswordWarning from './PasswordWarning';
 
 const Container = styled.form`
   width: 568px;
@@ -65,6 +66,8 @@ const Container = styled.form`
   }
 `;
 
+const PASSWORD_MIN_LENGTH = 8;
+
 const SignUpModal = () => {
   const [email, setEmail] = useState('');
   const [lastname, setLastname] = useState('');
@@ -75,6 +78,7 @@ const SignUpModal = () => {
   const [birthMonth, setBirthMonth] = useState<string | undefined>();
   const [hidePassword, setHidePassword] = useState(true);
   const { setValidateMode } = useValidateMode();
+  const [passwordFocused, setPasswordFocused] = useState(false);
   const dispatch = useDispatch();
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -96,6 +100,10 @@ const SignUpModal = () => {
   };
   const onChangeBirthYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setBirthYear(event.target.value);
+  };
+
+  const onFocusPassword = () => {
+    setPasswordFocused(true);
   };
 
   const toggleHidePassword = () => {
@@ -123,6 +131,18 @@ const SignUpModal = () => {
     }
   };
 
+  const isPasswordHasNameOrEmail = useMemo(
+    () => !password || !lastname || password.includes(lastname) || password.includes(email.split('@')[0]),
+    [password, lastname, email],
+  );
+  const isPasswordUnderMinLength = useMemo(
+    () => password.length === 0 || password.length < PASSWORD_MIN_LENGTH,
+    [password],
+  );
+  const isPasswordHasNotNumberAndSymbol = useMemo(
+    () => !(/[{}[\]/?.,;:|)*~`!^\-_+<>@#$%\\=('"]/g.test(password) && /[0-9]/g.test(password)),
+    [password],
+  );
   return (
     <Container onSubmit={onSubmitSignUp}>
       <CloseXIcon className='modal-close-x-icon' />
@@ -137,19 +157,19 @@ const SignUpModal = () => {
         errorMessage='이메일이 필요합니다.'
       />
       <Input
-        onChange={onChangeFirstname}
-        placeholder='성(예: 홍)'
-        icon={<PersonXIcon />}
-        useValidation
-        isValid={!!firstname}
-        errorMessage='성이 필요합니다.'
-      />
-      <Input
         onChange={onChangeLastname}
-        placeholder='이름(예: 길동)'
+        placeholder='성(예: 유)'
         icon={<PersonXIcon />}
         useValidation
         isValid={!!lastname}
+        errorMessage='성이 필요합니다.'
+      />
+      <Input
+        onChange={onChangeFirstname}
+        placeholder='이름(예: 경호)'
+        icon={<PersonXIcon />}
+        useValidation
+        isValid={!!firstname}
         errorMessage='이름이 필요합니다.'
       />
       <div className='sign-up-password-input-wrapper'>
@@ -165,9 +185,23 @@ const SignUpModal = () => {
             )
           }
           useValidation
-          isValid={!!password}
-          errorMessage='이메일이 필요합니다.'
+          isValid={!isPasswordHasNameOrEmail && !isPasswordUnderMinLength && !isPasswordHasNotNumberAndSymbol}
+          errorMessage='비밀번호를 입력하세요.'
+          onFocus={onFocusPassword}
         />
+        {passwordFocused && (
+          <>
+            <PasswordWarning
+              isValid={isPasswordHasNameOrEmail}
+              text='비밀번호에 본인 이름이나 이메일 주소를 포함할 수 없습니다.'
+            />
+            <PasswordWarning isValid={isPasswordUnderMinLength} text='최소 8자 이상을 유지하세요.' />
+            <PasswordWarning
+              isValid={isPasswordHasNotNumberAndSymbol}
+              text='숫자와 기호를 모두 포함하세요.'
+            />
+          </>
+        )}
       </div>
       <p className='sign-up-birthdate-label'>생일</p>
       <p className='sign-up-modal-birthday-info'>
