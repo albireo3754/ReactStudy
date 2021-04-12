@@ -2,10 +2,12 @@ import { createWrapper, HYDRATE, MakeStore } from 'next-redux-wrapper';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from './user';
 import common from './common';
+import registerRoom from './registerRoom';
 
 const rootReducer = combineReducers({
   user: user.reducer,
   common: common.reducer,
+  registerRoom: registerRoom.reducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;
 let initialRootState: RootState;
