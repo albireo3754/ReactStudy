@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import useValidateMode from '../../hooks/useValidateMode';
@@ -155,4 +155,4 @@ const Selector: FC<IProps> = ({
   );
 };
 
-export default Selector;
+export default React.memo(Selector);
