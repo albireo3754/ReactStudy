@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from './user';
 import common from './common';
 import registerRoom from './registerRoom';
+import auth from './auth';
 
 const rootReducer = combineReducers({
   user: user.reducer,
   common: common.reducer,
   registerRoom: registerRoom.reducer,
+  auth: auth.reducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;
 let initialRootState: RootState;
@@ -34,6 +36,7 @@ const initStore: MakeStore = () => {
 };
 
 export const wrapper = createWrapper(initStore);
+
 declare module 'react-redux' {
   interface DefaultRootState extends RootState {}
 }
