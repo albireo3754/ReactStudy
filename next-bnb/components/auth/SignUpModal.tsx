@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { userActions } from '../../store/user';
 import useValidateMode from '../../hooks/useValidateMode';
 import PasswordWarning from './PasswordWarning';
+import { authActions } from '../../store/auth';
 
 const Container = styled.form`
   width: 568px;
@@ -154,9 +155,14 @@ const SignUpModal: React.FC<{ closeModal: () => void }> = ({ closeModal }) => {
     () => !(/[{}[\]/?.,;:|)*~`!^\-_+<>@#$%\\=('"]/g.test(password) && /[0-9]/g.test(password)),
     [password],
   );
+
+  const changeToLoginModal = () => {
+    dispatch(authActions.setAuthMode('login'));
+  };
+
   return (
     <Container onSubmit={onSubmitSignUp}>
-      <CloseXIcon className='modal-close-x-icon' />
+      <CloseXIcon className='modal-close-x-icon' onClick={closeModal} />
       <Input
         onChange={onChangeEmail}
         placeholder='이메일 주소'
@@ -249,7 +255,7 @@ const SignUpModal: React.FC<{ closeModal: () => void }> = ({ closeModal }) => {
       </div>
       <p>
         이미 에어비앤비 계정이 있나요?
-        <span className='sign-up-modal-set-login' role='presentation' onClick={() => {}}>
+        <span className='sign-up-modal-set-login' role='presentation' onClick={changeToLoginModal}>
           로그인
         </span>
       </p>

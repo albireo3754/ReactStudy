@@ -7,6 +7,9 @@ import CloseEyeIcon from '../../public/statics/svg/auth/closed_eye.svg';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import palette from '../../styles/palette';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
 
 const Container = styled.form`
   width: 568px;
@@ -14,7 +17,7 @@ const Container = styled.form`
   background-color: white;
   z-index: 11;
 
-  .mordal-close-x-icon {
+  .modal-close-x-icon {
     cursor: pointer;
     display: block;
     margin: 0 0 40px auto;
@@ -48,20 +51,59 @@ interface IProps {
   closeModal: () => void;
 }
 const LoginModal: React.FC<IProps> = ({ closeModal }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
+  const dispatch = useDispatch();
+
+  const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+  const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+  const changeToSignUpModal = () => {
+    dispatch(authActions.setAuthMode('signup'));
+  };
   return (
     <Container>
-      <CloseXIcon className='mordal-close-x-icon' onClick={closeModal} />
+      <CloseXIcon className='modal-close-x-icon' onClick={closeModal} />
       <div className='login-input-wrapper'>
-        <Input placeholder='이메일 주소' name='email' type='email' icon={<MailIcon />} />
+        <Input
+          placeholder='이메일 주소'
+          name='email'
+          type='email'
+          icon={<MailIcon />}
+          value={email}
+          onChange={onChangeEmail}
+        />
       </div>
       <div className='login-input-wrapper login-password-input-wrapper'>
-        <Input placeholder='비밀번호 설정하기' type='password' icon={<CloseEyeIcon />} />
+        <Input
+          placeholder='비밀번호 설정하기'
+          type={hidePassword ? 'password' : 'text'}
+          value={password}
+          onChange={onChangePassword}
+          icon={
+            hidePassword ? (
+              <CloseEyeIcon onClick={toggleHidePassword} />
+            ) : (
+              <OpenedEyeIcon onClick={toggleHidePassword} />
+            )
+          }
+        />
       </div>
       <div className='login-modal-submit-button-wrapper'>
         <Button type='submit'>로그인</Button>
       </div>
       <p>
-        이미 에어비앤비 계정이 있나요?<span className='login-modal-set-signup'>회원가입</span>
+        이미 에어비앤비 계정이 있나요?
+        <span className='login-modal-set-signup' role='presentation' onClick={changeToSignUpModal}>
+          회원가입
+        </span>
       </p>
     </Container>
   );
