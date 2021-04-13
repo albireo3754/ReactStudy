@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       lastname,
       password: hashedPassword,
       birthday,
-      profileImage: '/static/image/user/default_user_profile_image.jpg',
+      profileImage: '/statics/image/user/default_user_profile_image.jpg',
     };
 
     const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
