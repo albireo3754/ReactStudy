@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import RegisterRoomBuilding from './RegisterRoomBuilding';
 
 const Container = styled.div``;
 

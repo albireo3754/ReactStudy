@@ -6,7 +6,7 @@ import OpenedEyeIcon from '../../public/statics/svg/auth/opend_eye.svg';
 import CloseEyeIcon from '../../public/statics/svg/auth/closed_eye.svg';
 import palette from '../../styles/palette';
 import Input from '../common/Input';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Selector from '../common/Selector';
 import { dayList, monthList, yearList } from '../../lib/staticData';
 import Button from '../common/Button';
@@ -80,6 +80,11 @@ const SignUpModal = () => {
   const { setValidateMode } = useValidateMode();
   const [passwordFocused, setPasswordFocused] = useState(false);
   const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      setValidateMode(false);
+    };
+  }, []);
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };

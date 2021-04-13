@@ -6,13 +6,14 @@ import Selector from '../../../components/common/Selector';
 import { largeBuildingTypeList } from '../../../lib/staticData';
 import { registerRoomActions } from '../../../store/registerRoom';
 import palette from '../../../styles/palette';
+import RegisterRoomFooter from './RegisterRoomFooter';
 
 const Container = styled.div`
+  padding: 62px 30px 100px;
   .register-room-building-selector-wrapper {
     width: 320px;
     margin-bottom: 32px;
   }
-  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -100,6 +101,12 @@ const RegisterRoomBuilding: React.FC = () => {
         return [];
     }
   }, [largeBuildingType]);
+  const isValid = useMemo(() => {
+    if (!largeBuildingType || !buildingType || !roomType || isSetUpForGuest === null) {
+      return false;
+    }
+    return true;
+  }, [largeBuildingType, buildingType, roomType, isSetUpForGuest]);
 
   const onChangeBuildingType = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(registerRoomActions.setBuildingType(event.target.value));
@@ -122,6 +129,7 @@ const RegisterRoomBuilding: React.FC = () => {
       <div className='register-room-building-selector-wrapper'>
         <Selector
           type='register'
+          isValid={!!largeBuildingType}
           value={largeBuildingType || undefined}
           defaultValue='하나를 선택해주세요.'
           disabledOptions={disabledlargeBuildingTypeOptions}
@@ -132,6 +140,7 @@ const RegisterRoomBuilding: React.FC = () => {
         <Selector
           type='register'
           value={buildingType || undefined}
+          isValid={!!buildingType}
           onChange={onChangeBuildingType}
           disabled={!largeBuildingType}
           label='건물 유형을 선택하세요.'
@@ -142,6 +151,7 @@ const RegisterRoomBuilding: React.FC = () => {
         <>
           <div className='register-room-room-type-radio'>
             <RadioGroup
+              isValid={!!roomType}
               label='게스트가 묵게 될 숙소 유형을 골라주세요.'
               value={roomType}
               options={roomTypeRadioOptions}
@@ -150,6 +160,7 @@ const RegisterRoomBuilding: React.FC = () => {
           </div>
           <div className='register-room-is-setup-for-guest-radio'>
             <RadioGroup
+              isValid={isSetUpForGuest !== null}
               label='게스트만 사용하도록 만들어진 숙소인가요?'
               value={isSetUpForGuest}
               onChange={onChangeSetUpForGuest}
@@ -158,6 +169,7 @@ const RegisterRoomBuilding: React.FC = () => {
           </div>
         </>
       )}
+      <RegisterRoomFooter isValid={isValid} nextHref='/room/register/bedrooms' prevHref='/' />
     </Container>
   );
 };
