@@ -52,7 +52,7 @@ const Container = styled.div`
 `;
 
 const Header = () => {
-  const { openModal, ModalPortal } = useModal();
+  const { openModal, ModalPortal, closeModal } = useModal();
   return (
     <Container>
       <Link href='/'>
@@ -70,7 +70,7 @@ const Header = () => {
         </button>
       </div>
       <ModalPortal>
-        <SignUpModal />
+        <SignUpModal closeModal={closeModal} />
       </ModalPortal>
     </Container>
   );

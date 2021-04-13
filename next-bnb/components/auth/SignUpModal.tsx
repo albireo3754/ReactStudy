@@ -64,11 +64,16 @@ const Container = styled.form`
     padding-bottom: 16px;
     border-bottom: 1px solid ${palette.gray_eb};
   }
+  .sign-up-modal-set-login {
+    color: ${palette.dark_cyan};
+    margin-left: 8px;
+    cursor: pointer;
+  }
 `;
 
 const PASSWORD_MIN_LENGTH = 8;
 
-const SignUpModal = () => {
+const SignUpModal: React.FC<{ closeModal: () => void }> = ({ closeModal }) => {
   const [email, setEmail] = useState('');
   const [lastname, setLastname] = useState('');
   const [firstname, setFirstname] = useState('');
@@ -118,7 +123,7 @@ const SignUpModal = () => {
   const onSubmitSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValidateMode(true);
-    if (!email || !lastname || !!firstname || !password) {
+    if (!email || !lastname || !firstname || !password) {
       return undefined;
     }
     try {
@@ -131,6 +136,7 @@ const SignUpModal = () => {
       };
       const { data } = await signupAPI(signUpBody);
       dispatch(userActions.setLoggedUser(data));
+      closeModal();
     } catch (e) {
       console.log(e);
     }
@@ -157,7 +163,6 @@ const SignUpModal = () => {
         type='email'
         name='email'
         icon={<MailIcon />}
-        useValidation
         isValid={!!email}
         errorMessage='이메일이 필요합니다.'
       />
@@ -165,7 +170,6 @@ const SignUpModal = () => {
         onChange={onChangeLastname}
         placeholder='성(예: 유)'
         icon={<PersonXIcon />}
-        useValidation
         isValid={!!lastname}
         errorMessage='성이 필요합니다.'
       />
@@ -173,7 +177,6 @@ const SignUpModal = () => {
         onChange={onChangeFirstname}
         placeholder='이름(예: 경호)'
         icon={<PersonXIcon />}
-        useValidation
         isValid={!!firstname}
         errorMessage='이름이 필요합니다.'
       />
@@ -189,7 +192,6 @@ const SignUpModal = () => {
               <OpenedEyeIcon onClick={toggleHidePassword} />
             )
           }
-          useValidation
           isValid={!isPasswordHasNameOrEmail && !isPasswordUnderMinLength && !isPasswordHasNotNumberAndSymbol}
           errorMessage='비밀번호를 입력하세요.'
           onFocus={onFocusPassword}
@@ -220,6 +222,7 @@ const SignUpModal = () => {
             options={monthList}
             defaultValue='월'
             disabledOptions={['월']}
+            isValid={!!birthMonth}
           />
         </div>
         <div className='sign-up-modal-birthday-day-selector'>
@@ -228,6 +231,7 @@ const SignUpModal = () => {
             options={dayList}
             defaultValue='일'
             disabledOptions={['일']}
+            isValid={!!birthDay}
           />
         </div>
         <div className='sign-up-modal-birthday-year-selector'>
@@ -236,12 +240,19 @@ const SignUpModal = () => {
             options={yearList}
             defaultValue='년'
             disabledOptions={['년']}
+            isValid={!!birthYear}
           />
         </div>
       </div>
       <div className='sign-up-modal-submit-button-wrapper'>
         <Button type='submit'>가입하기</Button>
       </div>
+      <p>
+        이미 에어비앤비 계정이 있나요?
+        <span className='sign-up-modal-set-login' role='presentation' onClick={() => {}}>
+          로그인
+        </span>
+      </p>
     </Container>
   );
 };
