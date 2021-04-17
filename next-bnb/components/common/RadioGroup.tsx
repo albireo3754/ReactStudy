@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import WarningIcon from '../../public/statics/svg/common/warning.svg';
@@ -143,4 +143,4 @@ const RadioGroup: React.FC<IProps> = ({
   );
 };
 
-export default React.memo(RadioGroup);
+export default memo(RadioGroup);

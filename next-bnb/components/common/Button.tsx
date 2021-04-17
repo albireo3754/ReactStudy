@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../styles/palette';
 
@@ -41,4 +41,4 @@ const Button: React.FC<IProps> = ({ children, color, ...props }) => {
   );
 };
 
-export default Button;
+export default memo(Button);

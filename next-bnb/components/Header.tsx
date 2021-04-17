@@ -3,15 +3,9 @@ import AirbnbLogoIcon from '../public/statics/svg/logo/logo.svg';
 import AirbnbLogoTextIcon from '../public/statics/svg/logo/logo_text.svg';
 import Link from 'next/link';
 import palette from '../styles/palette';
-import useModal from '../hooks/useModal';
-import { useDispatch, useSelector } from 'react-redux';
-import HamburgerIcon from '../public/statics/svg/header/hamburger.svg';
-import { authActions } from '../store/auth';
-import AuthModal from './auth/AuthModal';
-import { useState } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
-import { logoutAPI } from '../lib/api/auth';
-import { userActions } from '../store/user';
+import { useSelector } from 'react-redux';
+import HeaderUserProfile from './HeaderUserProfile';
+import HeaderAuths from './HeaderAuths';
 
 const Container = styled.div`
   position: sticky;
@@ -112,18 +106,8 @@ const Container = styled.div`
 `;
 
 const Header = () => {
-  const { openModal, ModalPortal, closeModal } = useModal();
-  const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  const logout = async () => {
-    try {
-      await logoutAPI();
-      dispatch(userActions.initUser());
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+  const isLogged = useSelector((state) => state.user.isLogged);
+
   return (
     <Container>
       <Link href='/'>
@@ -132,69 +116,7 @@ const Header = () => {
           <AirbnbLogoTextIcon />
         </div>
       </Link>
-      {user.isLogged ? (
-        <OutsideClickHandler
-          onOutsideClick={() => {
-            if (isUsermenuOpened) {
-              setIsUsermenuOpened(false);
-            }
-          }}
-        >
-          <button
-            className='header-user-profile'
-            type='button'
-            onClick={() => setIsUsermenuOpened((prev) => !prev)}
-          >
-            <HamburgerIcon />
-            <img src={user.profileImage} className='header-user-profile-image' alt='profile' />
-          </button>
-          {isUsermenuOpened && (
-            <ul className='header-usermenu'>
-              <li>숙소 관리</li>
-              <Link href='/room/register/building'>
-                <a
-                  role='presentation'
-                  onClick={() => {
-                    setIsUsermenuOpened(false);
-                  }}
-                >
-                  <li>숙소 등록하기</li>
-                </a>
-              </Link>
-              <div className='header-usermenu-divider' />
-              <li role='presentation' onClick={logout}>
-                로그아웃
-              </li>
-            </ul>
-          )}
-        </OutsideClickHandler>
-      ) : (
-        <div className='header-auth-buttons'>
-          <button
-            type='button'
-            className='header-sign-up-button'
-            onClick={() => {
-              dispatch(authActions.setAuthMode('signup'));
-              openModal();
-            }}
-          >
-            회원가입
-          </button>
-          <button
-            type='button'
-            className='header-login-button'
-            onClick={() => {
-              dispatch(authActions.setAuthMode('login'));
-              openModal();
-            }}
-          >
-            로그인
-          </button>
-        </div>
-      )}
-      <ModalPortal>
-        <AuthModal closeModal={closeModal} />
-      </ModalPortal>
+      {isLogged ? <HeaderUserProfile /> : <HeaderAuths />}
     </Container>
   );
 };

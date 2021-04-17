@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
+import { FC, memo } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import useValidateMode from '../../hooks/useValidateMode';
 import palette from '../../styles/palette';
 import WarningIcon from '../../public/statics/svg/common/warning.svg';
 
@@ -155,4 +154,4 @@ const Selector: FC<IProps> = ({
   );
 };
 
-export default React.memo(Selector);
+export default memo(Selector);

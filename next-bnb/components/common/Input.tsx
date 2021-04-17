@@ -1,7 +1,6 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import useValidateMode from '../../hooks/useValidateMode';
 import palette from '../../styles/palette';
 
 type InputContainerProps = {
@@ -89,4 +88,4 @@ const Input: FC<IProps> = ({ icon, isValid = false, useValidation = true, errorM
   );
 };
 
-export default Input;
+export default memo(Input);
