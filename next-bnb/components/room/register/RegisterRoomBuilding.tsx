@@ -6,7 +6,7 @@ import Selector from '../../../components/common/Selector';
 import { largeBuildingTypeList } from '../../../lib/staticData';
 import { registerRoomActions } from '../../../store/registerRoom';
 import palette from '../../../styles/palette';
-import RegisterRoomFooter from './RegisterRoomFooter';
+import RegisterRoomFooter from '../../register/RegisterRoomFooter';
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -59,7 +59,7 @@ const isSetUpForGuestOptions = [
     value: false,
   },
 ];
-const RegisterRoomBuilding: React.FC = () => {
+const RegisterRoomBedrooms: React.FC = () => {
   const largeBuildingType = useSelector((state) => state.registerRoom.largeBuildingType);
   const buildingType = useSelector((state) => state.registerRoom.buildingType);
   const roomType = useSelector((state) => state.registerRoom.roomType);
@@ -174,4 +174,4 @@ const RegisterRoomBuilding: React.FC = () => {
   );
 };
 
-export default RegisterRoomBuilding;
+export default RegisterRoomBedrooms;

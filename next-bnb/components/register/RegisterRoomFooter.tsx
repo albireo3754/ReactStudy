@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Button from '../../../components/common/Button';
-import useValidateMode from '../../../hooks/useValidateMode';
-import BackArrowIcon from '../../../public/statics/svg/register/register_room_footer_back_arrow.svg';
-import palette from '../../../styles/palette';
+import Button from '../common/Button';
+import useValidateMode from '../../hooks/useValidateMode';
+import BackArrowIcon from '../../public/statics/svg/register/register_room_footer_back_arrow.svg';
+import palette from '../../styles/palette';
 const Container = styled.footer`
   position: fixed;
   bottom: 0;

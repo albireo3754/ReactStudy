@@ -1,10 +1,11 @@
+import { NextPage } from 'next';
 import styled from 'styled-components';
-import RegisterRoomBuilding from './RegisterRoomBuilding';
+import RegisterRoomBuilding from '../../../components/room/register/RegisterRoomBuilding';
 
 const Container = styled.div``;
 
-const building: React.FC = () => {
-  return <RegisterRoomBuilding></RegisterRoomBuilding>;
+const building: NextPage = () => {
+  return <RegisterRoomBuilding />;
 };
 
 export default building;

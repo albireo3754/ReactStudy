@@ -18,6 +18,7 @@ const getButtonColor = (color: string) => {
 const Container = styled.button<{ color?: 'dark_cyan' }>`
   width: 100%;
   height: 48px;
+  padding: 0 15px;
   border: 0;
   border-radius: 4px;
   color: white;
