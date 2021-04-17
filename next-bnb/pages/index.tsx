@@ -7,7 +7,6 @@ const index: NextPage = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async ({ store }) => {
-  console.log(store);
   try {
     // return { props: {} };
   } catch (e) {
