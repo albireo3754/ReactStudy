@@ -194,3 +194,9 @@ useEffect(() => {
 
 3. 클래스는 render 부분만 rerender가 일어나는데 반해, hooks는 전체적으로 다 일어난다. 그래서 시간이 오래걸릴 수 있는 연산은 useMemo로 묶어주는게 좋은데, useCallback 또한 마찬가지임.
 
+# 틱택토
+> 목적
+> 1. useReducer 훅의 이해
+> 2. 구조가 복잡한 게임을 이용해 useCallback, useReducer를 사용한다.
+
+1. useReducer는 redux의 맛보기로 사용할 수 있음. tictactoe - table - tr - td
