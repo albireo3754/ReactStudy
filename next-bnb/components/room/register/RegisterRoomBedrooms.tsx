@@ -5,6 +5,12 @@ import palette from '../../../styles/palette';
 import RegisterRoomFooter from '../../register/RegisterRoomFooter';
 import Counter from '../../common/Counter';
 import { registerRoomActions } from '../../../store/registerRoom';
+import Selector from '../../common/Selector';
+import { bedroomCountList } from '../../../lib/staticData';
+import { getNumber } from '../../../lib/utils';
+import Button from '../../common/Button';
+import RegisterRoomBedTypes from './RegisterROomBedTypes';
+import RegisterRoomBedList from './RegisterRoomBedList';
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -30,14 +36,70 @@ const Container = styled.div`
     margin-top: 24px;
     margin-bottom: 32px;
   }
+  .register-room-bedroom-count-wrapper {
+    width: 320px;
+    margin-bottom: 32px;
+  }
+  .register-room-bed-count-wrapper {
+    width: 320px;
+    margin-bottom: 57px;
+  }
+  .register-room-bed-type-info {
+    margin-top: 6px;
+    margin-bottom: 20px;
+    max-width: 400px;
+    word-break: keep-all;
+  }
+  .register-room-bed-type-list-wrapper {
+    width: 548px;
+  }
+  .register-room-bedroom {
+    width: 100%;
+    padding: 28px 0;
+    border-top: 1px solid ${palette.gray_dd};
+    &:last-child {
+      border-bottom: 1px solid ${palette.gray_dd};
+    }
+  }
+  .register-room-bed-type-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .register-room-bed-type-bedroom {
+    font-size: 19px;
+    color: ${palette.gray_48};
+  }
 `;
 
-const RegisterRoomBuilding: React.FC = () => {
+{
+  bedList: [
+    { id: 1, beds: [{ type: '소파', count: 1 }] },
+    {
+      id: 2,
+      beds: [
+        { type: '더블', count: 2 },
+        { type: '싱글', count: 1 },
+      ],
+    },
+    { id: 3, beds: [{ type: '에어매트릭스', count: 1 }] },
+  ];
+  publicBedList: [{ type: '요와 이불', count: 1 }];
+}
+
+const RegisterRoomBedroom: React.FC = () => {
   const maximumGuestCount = useSelector((state) => state.registerRoom.maximumGuestCount);
+  const bedroomCount = useSelector((state) => state.registerRoom.bedroomCount);
+  const bedCount = useSelector((state) => state.registerRoom.bedCount);
+  const bedlist = useSelector((state) => state.registerRoom.bedList);
   const dispatch = useDispatch();
 
   const onChangeMaximumGuestCount = (value: number) =>
     dispatch(registerRoomActions.setMaximumGuestCount(value));
+  const onChangeBedroomCount = (event: React.ChangeEvent<HTMLSelectElement>) =>
+    dispatch(registerRoomActions.setBedroomCount(getNumber(event.target.value) || 0));
+  const onChangeBedCount = (value: number) => dispatch(registerRoomActions.setBedCount(value));
   return (
     <Container>
       <h2>숙소에 얼마나 많은 인원이 숙박할 수 있나요?</h2>
@@ -48,9 +110,32 @@ const RegisterRoomBuilding: React.FC = () => {
       <div className='register-room-maximum-guest-count-wrapper'>
         <Counter label='최대 숙박 인원' value={maximumGuestCount} onChange={onChangeMaximumGuestCount} />
       </div>
-      <RegisterRoomFooter isValid={true} nextHref='/room/register/bedrooms' prevHref='/' />
+      <div className='register-room-bedroom-count-wrapper'>
+        <Selector
+          type='register'
+          value={`침실 ${bedroomCount}개`}
+          isValid={!!bedroomCount}
+          onChange={onChangeBedroomCount}
+          label='게스트가 사용할 수 있는 침실은 몇 개 인가요?'
+          options={bedroomCountList}
+        />
+      </div>
+      <div className='register-room-bed-count-wrapper'>
+        <Counter label='침대' value={bedCount} onChange={onChangeBedCount} />
+      </div>
+      <h4>침대 유형</h4>
+      <p className='register-room-bed-type-info'>
+        각 침실에 놓인 침대 유형을 명시하면 숙소에 침대가 어떻게 구비되어 있는지 게스트가 잘 파악할 수
+        있습니다.
+      </p>
+      <RegisterRoomBedList />
+      <RegisterRoomFooter
+        isValid={!!bedroomCount}
+        nextHref='/room/register/bathroom'
+        prevHref='/room/register/building'
+      />
     </Container>
   );
 };
 
-export default RegisterRoomBuilding;
+export default RegisterRoomBedroom;

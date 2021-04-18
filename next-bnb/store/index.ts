@@ -31,7 +31,6 @@ const initStore: MakeStore = () => {
     devTools: true,
   });
   initialRootState = store.getState();
-  console.log(initialRootState);
   return store;
 };
 

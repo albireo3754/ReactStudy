@@ -79,10 +79,8 @@ const Counter: React.FC<IProps> = ({
         <p>{value}</p>
         <button
           type='button'
-          disabled={value === minValue}
           onClick={() => {
             if (onChange) {
-              console.log(value + increaseNum, onChange);
               onChange(value + increaseNum);
             }
           }}
