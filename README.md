@@ -179,3 +179,18 @@ useEffect(() => {
 5. 위는 클래스 버전이고 훅은? useState하나에 다 통합되어있음 대신 render/ rerender 인지 조건을 잘 나눠야함
 
 6. useEffect는 레이아웃 변경 후에 작동한다. 변경 전에 사용하고 싶으면 useLayoutEffect 
+
+# 로또게임
+> 목적
+> 1. 전체적인 기본기 복습
+> 2. 클래스와는 다른 생명주기를 갖는 훅 복습
+> 3. render만 실행되는 class component와는 달리 함수 전체가 재실행 되는 훅스의 차이 → useMemo를 통해 극복함.
+> 4. useCallback
+
+1. hooks의 useEffect는 componentDidMount와 componentDidUpdate 동시에 작동하도록 immutable한 값을 지정해주면 된다. 그런 방식으로 두개의 함수를 하나로 관리 가능함.
+만약 useEffect(() => {}, []) 로 하면 componentDidMount를 정확히 카피한 동작을 한다.
+
+2. useCallback는 자식 props에 함수를 전달할 때 사용함. 만약에 그렇지 않는다면 매번 자식에게 새로운 함수를 넘겨줘서 불필요한 rendering이 발생하기 때문이다.
+
+3. 클래스는 render 부분만 rerender가 일어나는데 반해, hooks는 전체적으로 다 일어난다. 그래서 시간이 오래걸릴 수 있는 연산은 useMemo로 묶어주는게 좋은데, useCallback 또한 마찬가지임.
+
