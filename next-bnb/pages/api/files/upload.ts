@@ -16,7 +16,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const form = new formidable.IncomingForm();
       const url = await new Promise((resolve, reject) => {
         form.parse(req, async (err, fields, files) => {
-          console.log(files, files.file.path);
           const s3 = new aws.S3({
             accessKeyId: process.env.ACCESSKEY_ID!,
             secretAccessKey: process.env.SECRET_ACCESSKEY_ID!,
