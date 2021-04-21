@@ -15,6 +15,7 @@ const StyledTextarea = styled(ReactAutosizeTextarea)`
   outline: none;
   resize: none;
   font: inherit;
+  word-break: normal !important;
   & ::placeholder {
     color: ${palette.gray_76};
   }

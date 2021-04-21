@@ -25,6 +25,7 @@ type RegisterRoomState = {
   conveniences: string[];
   photos: string[];
   description: string;
+  title: string;
 };
 
 const initialState: RegisterRoomState = {
@@ -51,6 +52,7 @@ const initialState: RegisterRoomState = {
   conveniences: [],
   photos: [],
   description: '',
+  title: '',
 };
 
 const registerRoom = createSlice({
@@ -178,6 +180,9 @@ const registerRoom = createSlice({
     },
     setDescription(state, action: PayloadAction<string>) {
       state.description = action.payload;
+    },
+    setTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload;
     },
   },
 });
