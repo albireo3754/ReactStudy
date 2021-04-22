@@ -1,17 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RegisterRoomState } from '../types/reduxState';
 import { BedType } from '../types/room';
-
-type RegisterRoomState = {
-  largeBuildingType: string | null;
-  buildingType: string | null;
-  roomType: string | null;
-  isSetUpForGuest: boolean | null;
-  maximumGuestCount: number;
-  bedroomCount: number;
-  bedCount: number;
-  bedList: { id: number; beds: { type: BedType; count: number }[] }[];
-  publicBedList: { type: BedType; count: number }[];
-};
 
 const initialState: RegisterRoomState = {
   largeBuildingType: null,
@@ -23,6 +12,24 @@ const initialState: RegisterRoomState = {
   bedCount: 1,
   bedList: [],
   publicBedList: [],
+  bathroomCount: 1,
+  bathroomType: null,
+  country: '',
+  city: '',
+  district: '',
+  streetAddress: '',
+  detailAddress: '',
+  postcode: '',
+  latitude: 0,
+  longitude: 0,
+  amentities: [],
+  conveniences: [],
+  photos: [],
+  description: '',
+  title: '',
+  price: 0,
+  startDate: null,
+  endDate: null,
 };
 
 const registerRoom = createSlice({
@@ -108,6 +115,60 @@ const registerRoom = createSlice({
         state.publicBedList[index].count = count;
       }
       return state;
+    },
+    setBathroomCount(state, action: PayloadAction<number>) {
+      state.bathroomCount = action.payload;
+    },
+    setBathroomType(state, action: PayloadAction<'private' | 'public'>) {
+      state.bathroomType = action.payload;
+    },
+    setCountry(state, action: PayloadAction<string>) {
+      state.country = action.payload;
+    },
+    setCity(state, action: PayloadAction<string>) {
+      state.city = action.payload;
+    },
+    setDistrict(state, action: PayloadAction<string>) {
+      state.district = action.payload;
+    },
+    setStreetAddress(state, action: PayloadAction<string>) {
+      state.streetAddress = action.payload;
+    },
+    setDetailAddress(state, action: PayloadAction<string>) {
+      state.detailAddress = action.payload;
+    },
+    setPostcode(state, action: PayloadAction<string>) {
+      state.postcode = action.payload;
+    },
+    setLatitude(state, action: PayloadAction<number>) {
+      state.latitude = action.payload;
+    },
+    setLongitude(state, action: PayloadAction<number>) {
+      state.longitude = action.payload;
+    },
+    setAmentities(state, action: PayloadAction<string[]>) {
+      state.amentities = action.payload;
+    },
+    setConveniences(state, action: PayloadAction<string[]>) {
+      state.conveniences = action.payload;
+    },
+    setPhotos(state, action: PayloadAction<string[]>) {
+      state.photos = action.payload;
+    },
+    setDescription(state, action: PayloadAction<string>) {
+      state.description = action.payload;
+    },
+    setTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload;
+    },
+    setPrice(state, action: PayloadAction<number>) {
+      state.price = action.payload;
+    },
+    setStartDate(state, action: PayloadAction<string | null>) {
+      state.startDate = action.payload;
+    },
+    setEndDate(state, action: PayloadAction<string | null>) {
+      state.endDate = action.payload;
     },
   },
 });

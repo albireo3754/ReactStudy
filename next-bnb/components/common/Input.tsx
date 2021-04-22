@@ -44,6 +44,12 @@ const Container = styled.div<InputContainerProps>`
     font-size: 14px;
     color: ${palette.tawny};
   }
+  label {
+    span {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
   ${({ useValidation, isValid }) =>
     useValidation &&
     !isValid &&
@@ -70,16 +76,30 @@ const Container = styled.div<InputContainerProps>`
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
   isValid?: boolean;
+  label?: string;
   validateMode?: boolean;
   useValidation?: boolean;
   errorMessage?: string;
 }
 
-const Input: FC<IProps> = ({ icon, isValid = false, useValidation = true, errorMessage, ...props }) => {
+const Input: FC<IProps> = ({
+  label,
+  icon,
+  isValid = false,
+  useValidation = true,
+  errorMessage,
+  ...props
+}) => {
   const validateMode = useSelector((state) => state.common.validateMode);
   return (
     <Container iconExist={!!icon} isValid={isValid} useValidation={validateMode && useValidation}>
-      <input {...props} />
+      {label && (
+        <label>
+          <span>{label}</span>
+          <input {...props}></input>
+        </label>
+      )}
+      {!label && <input {...props} />}
       <div className='input-icon-wrapper'>{icon}</div>
       {useValidation && validateMode && !isValid && errorMessage && (
         <p className='input-error-message'>{errorMessage}</p>
