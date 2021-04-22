@@ -1,33 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RegisterRoomState } from '../types/reduxState';
 import { BedType } from '../types/room';
-
-type RegisterRoomState = {
-  largeBuildingType: string | null;
-  buildingType: string | null;
-  roomType: string | null;
-  isSetUpForGuest: boolean | null;
-  maximumGuestCount: number;
-  bedroomCount: number;
-  bedCount: number;
-  bedList: { id: number; beds: { type: BedType; count: number }[] }[];
-  publicBedList: { type: BedType; count: number }[];
-  bathroomCount: number;
-  bathroomType: 'private' | 'public' | null;
-  country: string;
-  city: string;
-  district: string;
-  streetAddress: string;
-  detailAddress: string;
-  postcode: string;
-  latitude: number;
-  longitude: number;
-  amentities: string[];
-  conveniences: string[];
-  photos: string[];
-  description: string;
-  title: string;
-  price: number;
-};
 
 const initialState: RegisterRoomState = {
   largeBuildingType: null,
@@ -55,6 +28,8 @@ const initialState: RegisterRoomState = {
   description: '',
   title: '',
   price: 0,
+  startDate: null,
+  endDate: null,
 };
 
 const registerRoom = createSlice({
@@ -188,6 +163,12 @@ const registerRoom = createSlice({
     },
     setPrice(state, action: PayloadAction<number>) {
       state.price = action.payload;
+    },
+    setStartDate(state, action: PayloadAction<string | null>) {
+      state.startDate = action.payload;
+    },
+    setEndDate(state, action: PayloadAction<string | null>) {
+      state.endDate = action.payload;
     },
   },
 });
