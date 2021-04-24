@@ -28,10 +28,7 @@ module.exports = {
           loader: 'ts-loader',
           options: {
             getCustomTransformers: () => ({
-              before: [
-                require('react-refresh-typescript')(),
-                createStyledComponentsTransformer(),
-              ],
+              before: [createStyledComponentsTransformer()],
             }),
           },
         },
@@ -69,6 +66,7 @@ module.exports = {
     publicPath: '/dist/',
     hot: true,
   },
+  exclude: /node_modules/,
 };
 console.log(isDevelopment);
 // {
