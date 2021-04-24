@@ -1,9 +1,10 @@
 import { NextPage } from 'next';
 import { wrapper } from '../store';
+import Home from '../components/Home';
 
 const index: NextPage = () => {
   // console.log(process.env, '클라');
-  return <div>hello world</div>;
+  return <Home />;
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async ({ store }) => {
