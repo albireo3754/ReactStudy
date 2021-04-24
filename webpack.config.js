@@ -3,7 +3,6 @@ const cleanWebpackPlugin = require('clean-webpack-plugin');
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
   .default;
 const uglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const webpack = require('webpack');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
