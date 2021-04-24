@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Box from './Box';
 import { useDispatch, useSelector } from 'react-redux';
-import { directionsActions } from '../../src/store/directions';
+import { directionsActions } from '../store/directions';
 import {
   appendHeadAsync,
   changeDirection,

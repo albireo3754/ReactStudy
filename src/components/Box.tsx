@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { TDirection } from '../../src/types/store';
-import { RootState } from '../../src/store';
+import { TDirection } from '../types/store';
+import { RootState } from '../store';
 interface IProps {
   row: number;
   col: number;

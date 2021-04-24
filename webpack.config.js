@@ -9,7 +9,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   name: 'rsp-setting',
-  mode: 'development', // 실 서비스 : production
+  mode: 'production', // 실 서비스 : production
   devtool: 'eval-cheap-module-source-map',
   entry: {
     root: ['./src/root.tsx'],
@@ -53,8 +53,6 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.css', '.js', '.jsx', 'json'],
   },
   plugins: [
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
     !isDevelopment &&
       new uglifyjsWebpackPlugin({
         cache: true,
@@ -66,7 +64,6 @@ module.exports = {
     publicPath: '/dist/',
     hot: true,
   },
-  exclude: /node_modules/,
 };
 console.log(isDevelopment);
 // {
