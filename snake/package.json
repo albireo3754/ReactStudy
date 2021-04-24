@@ -1,23 +1,22 @@
 {
-  "name": "katalkfe",
+  "name": "react-snake",
   "version": "1.0.0",
-  "description": "카카오톡 챗봇 api를 활용해서 만든 챗봇 서버를 웹에서 테스트 할 수 있는 카카오톡 클론코딩 카톡을 만들어 본다. (바닐라 JS / 리액트)",
+  "description": "리액트 뱀게임",
   "main": "",
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "webpack --mode production --config webpack.config.js",
-    "start": "webpack-dev-server --mode development --config webpack.config.js --open"
+    "start": "webpack-dev-server --mode development --config webpack.config.js --open",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/starpro123/KaTalkFE.git"
+    "url": "git+https://github.com/starpro123/ReactStudy.git"
   },
   "author": "starpro123",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/starpro123/KaTalkFE/issues"
-  },
-  "homepage": "https://github.com/starpro123/KaTalkFE#readme",
+  "homepage": "http://starpro123.github.io/ReactStudy/snake",
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/node": "^14.14.41",
@@ -38,6 +37,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
     "file-loader": "^6.2.0",
+    "gh-pages": "^3.1.0",
     "mini-css-extract-plugin": "^1.3.9",
     "prettier": "^2.2.1",
     "react-refresh": "^0.9.0",
