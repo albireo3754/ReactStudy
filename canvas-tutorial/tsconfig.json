@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true, // 자바스크립트 파일 컴파일 허용 여부
+    "allowSyntheticDefaultImports": true, // export default 를 export 한 값들을 가지는 객체로 설정
+    "module": "esnext", // ???
+    "moduleResolution": "node", // ???
+    "esModuleInterop": true,
+    "target": "es5", // ???
+    "lib": [
+      // 컴파일에 포함될 라이브러리 파일 /usr/local/lib/node_modules/typescript
+      "DOM",
+      "es6",
+      "es2019"
+    ],
+    "strict": true,
+    "strictNullChecks": true,
+    "jsx": "react", // ???
+    "baseUrl": ".", // 기본 디렉토리 위치
+    "outDir": "public", // 빌드 후 내보낼 파일 디렉토리
+    "sourceMap": true, // 원본소스 변환소스 매핑 기능 사용 여부
+    "charset": "utf8" // 입력파일의 문자집합 형식
+  },
+  "include": ["src", "*.ts", "*.tsx"]
+}
