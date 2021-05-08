@@ -2,7 +2,12 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Button from './Header/Button';
 
-const Container = styled.div``;
+const Container = styled.div`
+  .button-wrapper {
+    display: flex;
+    justify-content: space-around;
+  }
+`;
 
 const rspMap = {
   Scissor: 2,
@@ -52,16 +57,18 @@ const RSP: React.FC = () => {
 
   return (
     <Container>
-      <div>{`승: ${win} / 패 : ${lose} / 무 : ${draw}`}</div>
-      <Button value='Scissor' onClick={onClick}>
-        가위
-      </Button>
-      <Button value='Rock' onClick={onClick}>
-        바위
-      </Button>
-      <Button value='Paper' onClick={onClick}>
-        보
-      </Button>
+      <h2>{`승: ${win} / 패 : ${lose} / 무 : ${draw}`}</h2>
+      <div className='button-wrapper'>
+        <Button value='Scissor' onClick={onClick}>
+          가위
+        </Button>
+        <Button value='Rock' onClick={onClick}>
+          바위
+        </Button>
+        <Button value='Paper' onClick={onClick}>
+          보
+        </Button>
+      </div>
     </Container>
   );
 };

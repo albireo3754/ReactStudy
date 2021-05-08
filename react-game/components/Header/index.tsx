@@ -14,7 +14,7 @@ const Header: React.FC = () => {
   return (
     <Container>
       <Link href='/game/rsp'>
-        <Button onClick={() => {}}>가위바위보 게임</Button>
+        <Button height='50px'>가위바위보 게임</Button>
       </Link>
     </Container>
   );
