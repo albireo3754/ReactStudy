@@ -56,7 +56,7 @@ const RSP: React.FC = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className='gugudan'>
       <h2>{`승: ${win} / 패 : ${lose} / 무 : ${draw}`}</h2>
       <div className='button-wrapper'>
         <Button value='Scissor' onClick={onClick}>
