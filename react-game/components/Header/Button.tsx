@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface IStyledProps {
+  /**width: '*px' */
   width?: string;
+  /**height: '*px */
   height?: string;
 }
 
@@ -16,7 +18,7 @@ const ContainerB = styled.button<IStyledProps>`
   height: ${({ height }) => height};
 `;
 
-interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, IStyledProps {}
+export interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, IStyledProps {}
 
 const Button: React.FC<IProps> = ({ width = '200px', height = '200px', children, ...props }) => {
   return (
