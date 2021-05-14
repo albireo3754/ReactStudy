@@ -4,7 +4,7 @@ import { Story, Meta } from '@storybook/react';
 import Button, { IProps } from './Button';
 
 export default {
-  title: 'Header/Button',
+  title: 'Common/Button',
   component: Button,
   argTypes: {
     backgroundColor: { control: 'color' },
