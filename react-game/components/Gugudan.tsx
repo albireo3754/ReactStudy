@@ -2,9 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  h2 {
-    margin-left: 20px;
-  }
+  padding: 0 20px;
 `;
 
 export function pickRandom() {
