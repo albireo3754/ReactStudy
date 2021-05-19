@@ -33,6 +33,11 @@ const Header: React.FC = () => {
           <Button height='50px'>숫자야구 게임</Button>
         </Link>
       </li>
+      <li>
+        <Link href='/game/minesearch'>
+          <Button height='50px'>지뢰 찾기 게임</Button>
+        </Link>
+      </li>
     </Container>
   );
 };
