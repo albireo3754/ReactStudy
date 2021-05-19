@@ -8,7 +8,7 @@ interface IStyledProps {
   height?: string;
 }
 
-const ContainerB = styled.button<IStyledProps>`
+const BContainer = styled.button<IStyledProps>`
   outline: none;
   cursor: pointer;
   background-color: #faf3f3;
@@ -22,9 +22,9 @@ export interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, I
 
 const Button: React.FC<IProps> = ({ width = '200px', height = '200px', children, ...props }) => {
   return (
-    <ContainerB width={width} height={height} {...props}>
+    <BContainer width={width} height={height} {...props}>
       {children}
-    </ContainerB>
+    </BContainer>
   );
 };
 

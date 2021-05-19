@@ -1,10 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
+import Button from './Common/Button';
+import Input from './Common/Input';
 
 const Container = styled.div`
-  h2 {
-    margin-left: 20px;
-  }
+  padding: 0 20px;
 `;
 
 export function pickRandom() {
@@ -34,17 +34,18 @@ const Gugudan: React.FC = () => {
     inputRef.current?.focus();
   };
 
-  const onChangeInput = useCallback((e) => {
-    console.log(e.target.value);
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  }, []);
+  };
 
   return (
     <Container className='gugudan'>
       <h2>{`${first} 곱하기 ${second} 는?`}</h2>
       <form onSubmit={onSubmit}>
-        <input name='value' ref={inputRef} onChange={onChangeInput} value={value} />
-        <button> 입력! </button>
+        <Input name='value' ref={inputRef} onChange={onChangeInput} value={value} />
+        <Button width='50px' height='50px'>
+          입력
+        </Button>
       </form>
       {result}
     </Container>

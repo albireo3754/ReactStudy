@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import Button from './Header/Button';
+import Button from './Common/Button';
 
 const Container = styled.div`
+  padding: 0 20px;
   .button-wrapper {
     display: flex;
     justify-content: space-around;
@@ -15,7 +16,7 @@ const rspMap = {
   Paper: 0,
 };
 
-export function calcRSP(player, bot = null) {
+export function calcRSP(player: 'Scissor' | 'Rock' | 'Paper', bot = null) {
   if (
     !(player in rspMap) ||
     !(bot in rspMap) ||

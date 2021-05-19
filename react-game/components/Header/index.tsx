@@ -1,8 +1,8 @@
 import Router from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
-import Button from './Button';
 import Link from 'next/link';
+import Button from '../Common/Button';
 
 const Container = styled.ul`
   display: flex;
@@ -26,6 +26,11 @@ const Header: React.FC = () => {
       <li>
         <Link href='/game/gugudan'>
           <Button height='50px'>구구단 게임</Button>
+        </Link>
+      </li>
+      <li>
+        <Link href='/game/numberbaseball'>
+          <Button height='50px'>숫자야구 게임</Button>
         </Link>
       </li>
     </Container>
