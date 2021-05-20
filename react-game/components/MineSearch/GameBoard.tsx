@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 const Container = styled.div``;
 
-const MineSearch: React.FC = () => {
+interface IProps {}
+
+const GameBoard: React.FC<IProps> = () => {
   return <Container></Container>;
 };
 
-export default MineSearch;
+export default GameBoard;

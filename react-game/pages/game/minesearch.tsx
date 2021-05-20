@@ -1,5 +1,5 @@
 import React from 'react';
-import MineSearch from '../../components/MineSearch';
+import MineSearch from '../../components/MineSearch/';
 
 const minesearch: React.FC = () => {
   return <MineSearch />;
