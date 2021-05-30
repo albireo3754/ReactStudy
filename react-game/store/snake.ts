@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export enum TDirection {
-  'food' = -3,
-  'snake' = -2,
-  'background' = -1,
-  'up' = 0,
-  'right' = 1,
-  'down' = 2,
-  'left' = 3,
-}
+import { TDirection } from '../components/Snake/config';
 
 const initialDirections = Array.from(Array(15), () => {
   return Array.from(Array(15), () => TDirection.background);
@@ -56,6 +47,9 @@ const snake = createSlice({
     },
     setDirection(state, action: PayloadAction<number>) {
       state.direction = action.payload;
+    },
+    setRest(state) {
+      state.rest -= 1;
     },
     reset: () => initialState,
   },

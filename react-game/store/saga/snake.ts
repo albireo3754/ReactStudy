@@ -1,28 +1,14 @@
 import { createAction, PayloadAction } from '@reduxjs/toolkit';
-import {
-  all,
-  call,
-  delay,
-  fork,
-  put,
-  select,
-  take,
-  takeEvery,
-  takeLatest,
-} from 'redux-saga/effects';
-import { directionsActions } from '../directions';
-import { DIRECTION } from '../../components/Snake';
-import { TDirection } from '../../types/store';
+import { all, call, delay, fork, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
+import { snakeActions } from '../snake';
 import _ from 'lodash';
+import { DIRECTION, TDirection } from '../../components/Snake/config';
 export const appendHeadAsync = createAction('APPEND_HEAD_ASYNC');
 export const popTailAsync = createAction('POP_TAIL_ASYNC');
 export const changeDirection = createAction<number>('CHANGE_DIRECTION');
 export const startGame = createAction('START_GAME');
 
-function findRandom(
-  directions: TDirection[][],
-  random: number
-): [number, number] {
+function findRandom(directions: TDirection[][], random: number): [number, number] {
   console.log(random);
   let count = 0;
   for (let i = 0; i < 15; i++) {
@@ -40,19 +26,17 @@ function findRandom(
 }
 
 function* setFoodSaga() {
-  const directions = (yield select(
-    (state) => state.directions.directions
-  )) as TDirection[][];
+  const directions = (yield select((state) => state.snake.directions)) as TDirection[][];
 
-  const rest = (yield select((state) => state.directions.rest)) as number;
+  const rest = (yield select((state) => state.snake.rest)) as number;
   if (rest > 0) {
     const [row, col] = findRandom(directions, _.random(1, rest));
     yield put(
-      directionsActions.changeDirection({
+      snakeActions.changeDirection({
         row,
         col,
         direction: -3,
-      })
+      }),
     );
   }
 }
@@ -60,67 +44,49 @@ function* setFoodSaga() {
 function* popTailSaga() {
   // 방향 확인
   // 방향이 바꼇을 경우에 반영해주기 위함
-  const tail = (yield select((state) => state.directions.tail)) as [
-    number,
-    number
-  ];
-  const directions = (yield select(
-    (state) => state.directions.directions
-  )) as TDirection[][];
+  const tail = (yield select((state) => state.snake.tail)) as [number, number];
+  const directions = (yield select((state) => state.snake.directions)) as TDirection[][];
   const tailDirection = directions[tail[0]][tail[1]];
 
-  const newTail = tail.map((x, i) => x + DIRECTION[tailDirection][i]) as [
-    number,
-    number
-  ];
+  const newTail = tail.map((x, i) => x + DIRECTION[tailDirection][i]) as [number, number];
 
   yield put(
-    directionsActions.changeDirection({
+    snakeActions.changeDirection({
       row: tail[0],
       col: tail[1],
       direction: TDirection.background,
-    })
+    }),
   );
-  yield put(directionsActions.setTail(newTail));
+  yield put(snakeActions.setTail(newTail));
 }
 
 function* appendHeadSaga() {
-  const directions = (yield select(
-    (state) => state.directions.directions
-  )) as TDirection[][];
+  const directions = (yield select((state) => state.snake.directions)) as TDirection[][];
   // 방향 확인
-  const direction = (yield select(
-    (state) => state.directions.direction
-  )) as number;
+  const direction = (yield select((state) => state.snake.direction)) as number;
   // 방향이 바꼇을 경우에 반영해주기 위함
-  const head = (yield select((state) => state.directions.head)) as [
-    number,
-    number
-  ];
+  const head = (yield select((state) => state.snake.head)) as [number, number];
   yield put(
-    directionsActions.changeDirection({
+    snakeActions.changeDirection({
       row: head[0],
       col: head[1],
       direction,
-    })
+    }),
   );
   // [a, b] + [1, 0] 등
-  const newHead = head.map((x, i) => x + DIRECTION[direction][i]) as [
-    number,
-    number
-  ];
+  const newHead = head.map((x, i) => x + DIRECTION[direction][i]) as [number, number];
   yield put(
-    directionsActions.changeDirection({
+    snakeActions.changeDirection({
       row: newHead[0],
       col: newHead[1],
       direction,
-    })
+    }),
   );
 
-  yield put(directionsActions.setHead(newHead));
+  yield put(snakeActions.setHead(newHead));
   switch (directions[newHead[0]][newHead[1]]) {
     case -3:
-      yield put(directionsActions.setRest());
+      yield put(snakeActions.setRest());
       yield call(setFoodSaga);
       break;
     case 0:
@@ -129,7 +95,7 @@ function* appendHeadSaga() {
     case 3:
     case undefined:
       console.log('hi?');
-      yield put(directionsActions.reset());
+      yield put(snakeActions.reset());
       yield call(alert, '실패했어요~');
       yield put(startGame());
       break;
@@ -142,12 +108,11 @@ function* appendHeadSaga() {
 }
 
 function* changeDirectionSaga(action: PayloadAction<number>) {
-  const direction = (yield select(
-    (state) => state.directions.direction
-  )) as number;
+  console.log(action);
+  const direction = (yield select((state) => state.snake.direction)) as number;
   if (direction % 2 !== action.payload % 2) {
     console.log(direction, action.payload);
-    yield put(directionsActions.setDirection(action.payload));
+    yield put(snakeActions.setDirection(action.payload));
     yield call(appendHeadSaga);
     yield put(startGame());
   }
@@ -161,6 +126,7 @@ function* startGameSaga() {
 }
 
 function* watchDirection() {
+  console.log('watch test?');
   yield takeEvery(changeDirection.type, changeDirectionSaga);
   yield takeLatest(startGame.type, startGameSaga);
   // yield takeLatest(popTailAsync.type, popTailSaga);
