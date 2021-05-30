@@ -1,7 +1,12 @@
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import snake from './snake';
 
-const rootReducer = combineReducers({});
+const sagaMiddleware = createSagaMiddleware();
+const rootReducer = combineReducers({
+  snake: snake.reducer,
+});
 
 const reducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
@@ -20,6 +25,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 const initStore = () => {
   return configureStore({
     reducer,
+    middleware: [...getDefaultMiddleware(), sagaMiddleware],
     devTools: true,
   });
 };
