@@ -200,3 +200,22 @@ useEffect(() => {
 > 2. 구조가 복잡한 게임을 이용해 useCallback, useReducer를 사용한다.
 
 1. useReducer는 redux의 맛보기로 사용할 수 있음. tictactoe - table - tr - td
+
+# 지뢰찾기
+> 목적
+> 1. Context API의 이해
+1. 기본 설정
+```jsx
+import { createContext } from "react";
+const TableContext = createContext({});
+<TableContext.Provider value ={{~~, dispatch}}
+</TableContext.Provider>
+```
+
+2. return or render 안에 객체를 생성할 경우 객체가 렌더링마다 새롭게 생성되기 때문에 최적화가 불가능함 -> 캐싱을 하자 -> react에서 제공하는 것은 useMemo
+
+3. 우클릭 이벤트는 onContextMenu
+
+4. 빈칸을 누르면 재귀를 이용해 주변에 있는 모든 빈칸들을 같이 열어준다. 강의에선 dfs를 최적화 하지 않아서 조금 비효율 ㅈ거이였는데, visited 배열을 추가해서 dfs를 효율적으로 개선할 수 있었음
+
+5. context API의 최적화 : provider를 통해 value를 전달할 때, useMemo를 이용해서 캐싱을 하기.
