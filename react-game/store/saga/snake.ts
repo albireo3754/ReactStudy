@@ -133,6 +133,6 @@ function* watchDirection() {
   // yield takeLatest(appendHeadAsync.type, appendHeadSaga);
 }
 
-export default function* directionSaga() {
+export default function* snakeSaga() {
   yield all([fork(watchDirection)]);
 }
