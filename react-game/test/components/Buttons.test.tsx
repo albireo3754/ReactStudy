@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import Button from '../../components/Header/Button';
+import Button from '../../components/Common/Button';
 
 describe('button', () => {
   it('has children words', () => {

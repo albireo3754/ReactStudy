@@ -25,8 +25,9 @@ export const IContainer = styled.input`
 `;
 
 export interface IProps extends React.HTMLProps<HTMLInputElement> {}
-const Input: React.FC<IProps> = () => {
-  return <IContainer></IContainer>;
+
+const Input: React.FC<IProps> = ({ onChange, ...props }) => {
+  return <IContainer onChange={onChange}></IContainer>;
 };
 
 export default Input;

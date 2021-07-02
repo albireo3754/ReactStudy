@@ -34,10 +34,9 @@ const Gugudan: React.FC = () => {
     inputRef.current?.focus();
   };
 
-  const onChangeInput = useCallback((e) => {
-    console.log(e.target.value);
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  }, []);
+  };
 
   return (
     <Container className='gugudan'>
@@ -45,8 +44,7 @@ const Gugudan: React.FC = () => {
       <form onSubmit={onSubmit}>
         <Input name='value' ref={inputRef} onChange={onChangeInput} value={value} />
         <Button width='50px' height='50px'>
-          {' '}
-          입력!{' '}
+          입력
         </Button>
       </form>
       {result}

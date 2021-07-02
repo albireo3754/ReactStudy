@@ -34,6 +34,11 @@ const Header: React.FC = () => {
         </Link>
       </li>
       <li>
+        <Link href='/game/minesearch'>
+          <Button height='50px'>지뢰 찾기 게임</Button>
+        </Link>
+      </li>
+      <li>
         <Link href='/game/snake'>
           <Button height='50px'>뱀 게임</Button>
         </Link>
